@@ -1,0 +1,266 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[letterpaper, margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{setspace}
+
+\title{\textbf{Ironexx: ecosistema de dispositivos inteligentes para la gestión de maquinaria y atención a clientes}}
+\date{13 de agosto de 2026}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Large Proyecto de Desarrollo para Dispositivos Inteligentes\par}
+    \vspace{1.5cm}
+    {\Huge \bfseries Ironexx\par}
+    \vspace{0.8cm}
+    {\Large Ecosistema de dispositivos inteligentes para la gestión de maquinaria y atención a clientes\par}
+    \vspace{2.5cm}
+    {\large Sandra Zoé Cabrera Velázquez\par}
+    {\large Grupo: IDGS16\par}
+    {\large Carrera: Ingeniería en Desarrollo de Software\par}
+    \vspace{2cm}
+    {\large 13 de agosto de 2026\par}
+\end{titlepage}
+
+\newpage
+
+\begin{abstract}
+El proyecto Ironexx propone un ecosistema de dispositivos inteligentes para la administración, supervisión y consulta de maquinaria de construcción, con integración de aplicaciones móviles, wearables, web y televisión. La solución está diseñada para facilitar la atención a clientes, mejorar la gestión de sucursales y permitir la visualización de información clave desde distintos tipos de dispositivos. En este documento se presenta el problema, la justificación, los objetivos, el alcance, la arquitectura del sistema, los requisitos funcionales y no funcionales, así como la seguridad, privacidad, retención de datos, pruebas y conclusiones del desarrollo. El reporte está orientado a cumplir con los lineamientos de la materia de Desarrollo para Dispositivos Inteligentes, y a ser presentado en formato académico para su revisión en Overleaf.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+El desarrollo de soluciones inteligentes en entornos empresariales ha permitido optimizar procesos de gestión, atención al cliente y toma de decisiones en tiempo real. En el contexto de la compra y venta de maquinaria de construcción, la falta de una plataforma unificada puede generar retrasos, errores de operación y mala coordinación entre áreas de atención, administración y supervisión. Este problema es más evidente cuando la información se encuentra dispersa entre distintos canales y dispositivos, sin una estrategia que permita su consulta de forma rápida y clara.
+
+Con base en esta necesidad, el proyecto Ironexx propone un ecosistema de dispositivos inteligentes que integra distintas interfaces para la gestión y presentación de información. La solución contempla una aplicación móvil para administradores, una aplicación wearable para recibir alertas y mensajes en tiempo real, una PWA para visualización de maquinaria en pantallas de TV, y una aplicación nativa para Android TV. Cada una de estas plataformas cumple un papel específico dentro de la experiencia del usuario y la lógica del negocio.
+
+El proyecto no solo busca demostrar conocimiento técnico, sino también mostrar la capacidad de diseñar soluciones adaptadas a diferentes contextos de uso, así como la integración de datos y servicios para una experiencia consistente y útil. Este tipo de enfoque es plenamente acorde con los objetivos del curso de Desarrollo para Dispositivos Inteligentes.
+
+\section{Justificación del proyecto}
+
+La industria de la maquinaria de construcción requiere sistemas que permitan monitorear inventarios, atender solicitudes de clientes y visualizar la información desde distintos puntos de acceso. En la práctica, la operación diaria de una empresa dedicada a esta actividad implica la coordinación entre ventas, administración, atención al cliente y supervisión de sucursales.
+
+La ausencia de una vista unificada obliga a los usuarios a consultar información por separado, duplicar tareas y atender solicitudes con retrasos. En este sentido, el proyecto responde a una necesidad real: incorporar una solución tecnológica que centralice la información y la presente de acuerdo con el dispositivo y el contexto de uso del usuario.
+
+Además, la propuesta aporta valor al permitir que un cliente pueda enviar un mensaje desde una interfaz web, mientras el administrador recibe dicha notificación en un wearable. Esto resulta especialmente útil en escenarios donde el responsable no se encuentra frente a una computadora y necesita atender alertas de manera rápida. Asimismo, la TV y la PWA permiten mostrar inventario y información comercial en un espacio público o institucional, reforzando la visibilidad de la empresa.
+
+\section{Objetivo general}
+
+Desarrollar un ecosistema de dispositivos inteligentes para la gestión de maquinaria de construcción, con integración de plataformas móviles, wearables, web y de televisión, que permita consultar inventario, atender solicitudes de clientes y visualizar información operativa en distintos dispositivos conforme a las necesidades del usuario.
+
+\section{Objetivos específicos}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item Diseñar una aplicación móvil con una interfaz clara y funcional para administración y consulta de maquinaria.
+    \item Implementar una aplicación wearable que permita recibir notificaciones urgentes de contacto y visualizar el detalle del mensaje del cliente.
+    \item Desarrollar una PWA para smart TV que muestre maquinaria por sucursal con un diseño orientado a pantallas grandes.
+    \item Crear una aplicación nativa para Android TV con interacción mediante control remoto y navegación básica.
+    \item Incorporar mecanismos de seguridad, privacidad y retención de datos en el sistema.
+    \item Evaluar la viabilidad del proyecto en términos de funcionalidad, experiencia de usuario y cumplimiento de los requisitos del curso.
+\end{itemize}
+
+\section{Alcance del proyecto}
+
+El alcance del proyecto incluye:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item Desarrollo de una interfaz móvil con enfoque administrativo.
+    \item Desarrollo de una aplicación wearable para recepción de notificaciones.
+    \item Desarrollo de una PWA para TV con contenido por sucursal y catálogo visual.
+    \item Desarrollo de una aplicación nativa Android TV con experiencia de navegación por control remoto.
+    \item Uso de datos de prueba o dummy data para validar la lógica del sistema.
+    \item Implementación de medidas básicas de privacidad y seguridad.
+    \item Documentación del proyecto con enfoque académico y de presentación.
+\end{itemize}
+
+No forma parte del alcance final de este proyecto la integración con un backend empresarial completo, ni una base de datos en producción con autenticación avanzada a nivel empresarial. Sin embargo, la solución demuestra la viabilidad de la idea y el diseño del ecosistema solicitado.
+
+\section{Requisitos funcionales}
+
+Los requisitos funcionales del sistema se definen a partir de la lógica de negocio y la interacción esperada entre dispositivos.
+
+\subsection{Móvil}
+\begin{itemize}[leftmargin=1.5em]
+    \item El administrador debe poder consultar información de maquinaria.
+    \item La aplicación debe mostrar datos relevantes por sucursal.
+    \item La app debe recibir y visualizar notificaciones en tiempo real.
+    \item La interfaz debe permitir acceder a detalles del cliente y del mensaje.
+\end{itemize}
+
+\subsection{Wearable}
+\begin{itemize}[leftmargin=1.5em]
+    \item El usuario debe recibir una alerta cuando existe una nueva solicitud de contacto.
+    \item La aplicación debe mostrar nombre, teléfono, correo y mensaje del cliente.
+    \item La pantalla debe permitir regresar a la vista principal.
+    \item La experiencia debe ser rápida, legible y adaptada a pantallas pequeñas.
+\end{itemize}
+
+\subsection{PWA TV}
+\begin{itemize}[leftmargin=1.5em]
+    \item La PWA debe presentar una selección de sucursales.
+    \item Debe mostrar maquinaria disponible por ubicación.
+    \item Debe mantener un diseño visual de 10 pies para pantallas grandes.
+    \item Debe permitir una navegación sencilla y legible desde teclado o control remoto.
+\end{itemize}
+
+\subsection{Android TV nativa}
+\begin{itemize}[leftmargin=1.5em]
+    \item La app debe visualizar una lista de maquinaria.
+    \item Debe permitir interacción con elementos seleccionados.
+    \item Debe mantener una identidad visual corporativa de Ironexx.
+    \item Debe funcionar en un entorno de pantalla grande con enfoque de distancia.
+\end{itemize}
+
+\section{Requisitos no funcionales}
+
+Los requisitos no funcionales tienen un papel importante en la calidad del proyecto. Entre los más relevantes se encuentran:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item Portabilidad: la aplicación debe funcionar en distintos dispositivos y plataformas.
+    \item Usabilidad: cada pantalla debe adaptarse a su contexto de uso.
+    \item Disponibilidad: la información debe poder consultarse sin mayor fricción.
+    \item Seguridad: se deben tomar medidas para evitar uso indebido de información.
+    \item Privacidad: los datos del usuario deben ser tratados con cuidado.
+    \item Mantenibilidad: el sistema debe estar organizado para futuras ampliaciones.
+    \item Escalabilidad: la solución puede expandirse hacia más sucursales, usuarios y servicios.
+\end{itemize}
+
+\section{Arquitectura del sistema}
+
+La arquitectura del proyecto se construye sobre la integración de cuatro capas principales:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Capa de presentación}: interfaces móviles, wearable, PWA y Android TV.
+    \item \textbf{Capa de lógica de negocio}: proceso de consulta, mensajes, notificaciones y navegación.
+    \item \textbf{Capa de datos}: información de prueba, sucursales, maquinaria y mensajes de ejemplo.
+    \item \textbf{Capa de seguridad y privacidad}: políticas, control de acceso, retención y protección de datos.
+\end{enumerate}
+
+La lógica del ecosistema permite que la información fluya desde la interfaz web o de contacto hacia una notificación dirigida al administrador en wearable. A su vez, la TV y la PWA presentan información comercial y operativa para usuarios de entorno de vigilancia o exhibición. Esta arquitectura demuestra una solución basada en dispositivos inteligentes y en la personalización de la experiencia por tipo de plataforma.
+
+\section{Tecnologías empleadas}
+
+El proyecto utiliza tecnologías actuales y adecuadas para cada tipo de dispositivo:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Flutter y Dart}: para la aplicación móvil y la aplicación wearable.
+    \item \textbf{HTML, CSS y JavaScript}: para la PWA para smart TV.
+    \item \textbf{Java y Android SDK}: para la aplicación nativa Android TV.
+    \item \textbf{Diseño visual corporativo}: propuesta con identidad Ironexx basada en tonos oscuros y detalles dorados.
+\end{itemize}
+
+La combinación de estas tecnologías responde a los requerimientos de cada dispositivo y permite una solución realista y multidisciplinaria.
+
+\section{Desarrollo por módulo}
+
+\subsection{Aplicación móvil}
+La aplicación móvil se desarrolló con Flutter para ofrecer una interfaz de administración con identidad visual corporativa. Su propósito principal es mostrar información clave y permitir la recepción de notificaciones. Este módulo representa la base del sistema y funciona como puente para la interacción del administrador con el ecosistema.
+
+\subsection{Aplicación wearable}
+La aplicación wearable está enfocada en una experiencia rápida, simple y orientada a la atención inmediata. Se implementó una pantalla de detalle del cliente que incluye nombre, correo, teléfono y mensaje, además de alertas con sonido y vibración para reforzar la notificación.
+
+\subsection{PWA para smart TV}
+La PWA presenta información de maquinaria y sucursales en una interfaz visual de gran escala. Su diseño se adapta a pantallas grandes y permite navegar en un entorno de televisión de forma clara y eficiente.
+
+\subsection{Aplicación nativa Android TV}
+La app nativa está diseñada para un entorno de control remoto, con una lista de productos o maquinaria y una navegación básica orientada a la selección visual. Este módulo permite complementar la propuesta del ecosistema con una experiencia de pantalla grande respaldada por una aplicación nativa.
+
+\section{Diseño de experiencia de usuario}
+
+Un aspecto importante del proyecto es la adaptación de la experiencia de usuario según el dispositivo. La app móvil usa una interfaz con mayor contenido y detalle, la wearable prioriza mensajes compactos y atención inmediata, y la TV o PWA centran la experiencia en la legibilidad a distancia y la visualización de información en pantallas grandes.
+
+Este enfoque cumple con el objetivo de la computación ubicua: oferecer la información en el contexto correcto y con el formato apropiado para el usuario que la está consumiendo.
+
+\section{Seguridad, privacidad y protección de datos}
+
+El proyecto incorpora consideraciones de seguridad y privacidad con base en la normativa mexicana de protección de datos y en buenas prácticas internacionales. Entre las medidas contempladas se encuentran:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item Content Security Policy para la PWA.
+    \item validación de origen en mensajes BroadcastChannel.
+    \item uso de HTTPS en producción.
+    \item validación de dispositivos conectados por BLE.
+    \item prevención del almacenamiento de datos sensibles en LocalStorage.
+    \item control de retención de datos y eliminación automática.
+\end{itemize}
+
+Además, el proyecto incluye una política de privacidad y un plan de retención que establece un periodo de 30 días para la mayor parte de la información personal y de uso. Esto es una evidencia clara de que el sistema se plantea no solo como una solución funcional, sino también como una propuesta consciente de la protección de la información del usuario.
+
+\section{Privacidad y retención según LFPDPPP}
+
+El proyecto contempla la protección de datos personales de acuerdo con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares. Los datos considerados incluyen información del administrador, contacto del cliente, historial de uso, consultas y datos asociados a la operación del sistema. La finalidad principal del tratamiento es la gestión de notificaciones, la supervisión operativa y la mejora de la experiencia de uso.
+
+El aviso de privacidad y el plan de retención contemplan la eliminación automática de información antigua, lo que refuerza la responsabilidad del sistema con respecto al tratamiento de datos personales. En consecuencia, el proyecto no se limita a la funcionalidad técnica, sino que incorpora una visión más profesional y completa de la ingeniería de software aplicada a dispositivos inteligentes.
+
+\section{Pruebas y validación}
+
+Durante el desarrollo del proyecto se realizaron pruebas funcionales de flujo para evaluar la lógica del sistema, la interacción de las plataformas y la experiencia del usuario. Las pruebas principales se enfocaron en:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item validación del flujo de notificación desde la interfaz hasta el wearable;
+    \item revisión de la experiencia visual en la PWA y la TV;
+    \item verificación del diseño y contenido de la app móvil;
+    \item validación del flujo de detalle del cliente y del mensaje;
+    \item revisión de la consistencia visual y de marca.
+\end{itemize}
+
+La validación funcional del proyecto demuestra que se cumple con la lógica de negocio planteada y con la intención general del sistema. Aunque se requieren pruebas y evidencia adicionales en emuladores o dispositivos reales para una validación completa, la propuesta ya ha sido verificada a nivel de arquitectura y flujo de interacción.
+
+\section{Resultados y discusión}
+
+Los resultados del proyecto muestran que la solución propuesta cumple con la idea central del curso: desarrollar un ecosistema inteligente, multidispositivo y funcional. La integración de una aplicación móvil, un wearable, una PWA y una Android TV nativa refleja una comprensión clara de la importancia de adaptar la información a cada tipo de pantalla y cada tipo de usuario.
+
+La visión del proyecto es especialmente valiosa porque no se limita a una sola aplicación, sino que presenta una solución completa en la que cada dispositivo cumple un rol específico dentro del mismo flujo operativo. Esto convierte a Ironexx en un caso de estudio relevante para dispositivos inteligentes, donde la innovación está centrada en la experiencia del usuario, la coordinación entre plataformas y la utilidad práctica del sistema.
+
+\section{Conclusiones}
+
+El proyecto Ironexx representa una propuesta sólida y bien fundamentada en el área de dispositivos inteligentes. A través de la integración de varias plataformas, se demuestra la capacidad para crear un ecosistema que mejora la gestión de información, facilita la atención a clientes y optimiza la experiencia de supervisión de maquinaria desde distintos dispositivos.
+
+La solución cumple con los objetivos de un proyecto académico de desarrollo de dispositivos inteligentes, pues integra tecnología actual, considera la experiencia del usuario, incorpora seguridad y privacidad, y establece un flujo funcional útil para la operación real de una empresa. La estructura del proyecto, junto con su enfoque multidispositivo, demuestra una comprensión clara de los principios de diseño y arquitectura para sistemas inteligentes.
+
+La propuesta puede considerarse exitosa desde el punto de vista académico y técnico, siempre con la observación de que una validación final más robusta requiere pruebas en dispositivos reales y una evidencia de ejecución más formal. No obstante, el proyecto cumple con la lógica, el alcance y la intención de la materia de Desarrollo para Dispositivos Inteligentes.
+
+\section{Checklist de cumplimiento SA}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Problema real:} Sí se identifica y se documenta.
+    \item \textbf{Objetivos claros:} Sí se establecen objetivos generales y específicos.
+    \item \textbf{Alcance definido:} Sí se delimita el alcance funcional.
+    \item \textbf{Requisitos funcionales:} Sí se describen para cada plataforma.
+    \item \textbf{Requisitos no funcionales:} Sí se consideran usabilidad, seguridad, privacidad y escalabilidad.
+    \item \textbf{Arquitectura del sistema:} Sí se presenta de forma clara.
+    \item \textbf{Aplicación de tecnologías actuales:} Sí, con Flutter, PWA, Java y Android.
+    \item \textbf{Diseño centrado en usuario:} Sí se adapta la experiencia a cada dispositivo.
+    \item \textbf{Seguridad y privacidad:} Sí se contemplan y documentan.
+    \item \textbf{Retención de datos:} Sí se especifica un plan de retención.
+    \item \textbf{Validación y pruebas:} Sí se describen pruebas funcionales y de flujo.
+    \item \textbf{Conclusión académica:} Sí se presenta una reflexión final del proyecto.
+\end{itemize}
+
+\section{Referencias}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item README principal del proyecto Ironexx.
+    \item Documentación del ecosistema de dispositivos inteligentes del repositorio.
+    \item Aviso de privacidad: \textit{docs/aviso\_privacidad.md}.
+    \item Checklist de seguridad PWA: \textit{docs/checklist\_seguridad\_pwa.md}.
+    \item Plan de retención de datos: \textit{docs/plan\_retencion\_datos.md}.
+    \item Material de referencia de Flutter, Android y desarrollo de interfaces multidevice.
+\end{itemize}
+
+\end{document}

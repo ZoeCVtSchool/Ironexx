@@ -1,0 +1,58 @@
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Android
+*.jks
+*.keystore
+.env
+local.properties
+*.iml
+.gradle/
+android/.gradle/
+android/captures/
+android/gradlew
+android/gradlew.bat
+android/local.properties
+android/**/GeneratedPluginRegistrant.java
+android/key.properties
+android/app/release/
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/profile
+ios/xcuserdata
+ios/.generated/
+ios/Flutter.podspec
+ios/Runner.xcworkspace/xcshareddata/
+ios/Runner.xcodeproj/xcshareddata/
+
+# PWA
+pwa_tv/node_modules/
+pwa_tv/.cache/
+pwa_tv/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# API Keys (never commit these)
+api_keys.txt
+secrets.json
+config.local.json

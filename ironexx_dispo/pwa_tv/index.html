@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Ironexx - Maquinaria de Construcción</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000; script-src 'self'; style-src 'self'; img-src 'self' data: https:; media-src 'self' https:;">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header class="tv-header">
+            <div class="header-left">
+                <div class="brand-wrap">
+                    <img src="icons/ironexx_logo.png" alt="Ironexx logo" class="brand-logo" />
+                    <div>
+                        <h1 class="app-title">IRONEXX</h1>
+                        <p class="app-subtitle">Maquinaria de Construcción</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="datetime" id="datetime"></div>
+                <div class="branch-controls">
+                    <label for="branchSelect" class="branch-label">Sucursal</label>
+                    <select id="branchSelect" aria-label="Seleccionar sucursal"></select>
+                </div>
+                <div class="branch-info" id="branchInfo">Sucursal: Todas</div>
+            </div>
+        </header>
+
+        <main class="tv-main">
+            <div class="background-media" id="backgroundMedia"></div>
+            <div class="content-overlay">
+                <div class="machine-grid" id="machineGrid">
+                    <!-- Machines will be loaded dynamically -->
+                </div>
+            </div>
+        </main>
+
+        <div class="loading-screen" id="loadingScreen">
+            <div class="spinner"></div>
+            <p>Cargando maquinaria...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Bitácora interna de trabajo — nunca debe subirse al repositorio
+context.txt
+Context.md
+
+# Secretos — nunca subir
+.env
+*.jks
+*.keystore
+key.properties
+google-services.json
+GoogleService-Info.plist
