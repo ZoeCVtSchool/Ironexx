@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'machine_scanner_screen.dart';
 import 'qr_scan_screen.dart';
+import 'sensor_monitor_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -100,6 +101,18 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const MachineScannerScreen()),
                 ),
                 accent: const Color(0xFF1E293B),
+              ),
+              const SizedBox(height: 12),
+              _actionButton(
+                context: context,
+                title: 'Monitor BLE del wearable',
+                subtitle: 'Pasos, ritmo cardíaco y calorías en tiempo real',
+                icon: Icons.bluetooth_rounded,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SensorMonitorScreen()),
+                ),
+                accent: const Color(0xFFD4AF62),
               ),
             ],
           ),

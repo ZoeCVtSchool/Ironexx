@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- Camera permissions for QR scanner -->
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- Bluetooth permissions -->
@@ -9,7 +10,8 @@
     <!-- Location permissions for BLE -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
+
     <application
         android:label="Ironexx"
         android:name="${applicationName}"

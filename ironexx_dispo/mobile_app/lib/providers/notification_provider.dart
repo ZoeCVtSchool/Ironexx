@@ -16,8 +16,9 @@ class NotificationProvider with ChangeNotifier {
   int get unreadCount => _history.length;
   SensorData? get currentData => _currentData;
 
-  bool get isStepsCritical => _currentData != null && _currentData!.steps > 10000;
-  bool get isHeartRateCritical => _currentData != null && _currentData!.heartRate > 120;
+  bool get isTemperaturaCritica => _currentData?.temperaturaCritica ?? false;
+  bool get isCombustibleCritico => _currentData?.combustibleCritico ?? false;
+  bool get isHorometroCritico => _currentData?.horometroCritico ?? false;
 
   void updateSensorData(SensorData data) {
     _currentData = data;
