@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ironexx-tv-v3';
+const CACHE_NAME = 'ironexx-tv-v4';
 const STATIC_ASSETS = [
     '/',
     '/index.html',
