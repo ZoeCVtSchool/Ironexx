@@ -193,21 +193,25 @@ body {
 }
 
 .machine-card-header {
+    /* Columna en vez de fila: el precio va debajo del nombre para que nunca
+       se encimen, sin importar que tan largo sea el nombre de la maquina. */
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
     margin-bottom: 20px;
 }
 
 .machine-name {
-    font-size: 2.8rem;
+    /* Dato principal >= 80px (requisito 8.2 de la guia) */
+    font-size: 5rem;
     font-weight: 700;
     color: var(--white);
-    line-height: 1.15;
+    line-height: 1.1;
 }
 
 .machine-price {
-    font-size: 2.2rem;
+    font-size: 2rem;
     color: var(--gold-soft);
     font-weight: 700;
 }
@@ -217,9 +221,10 @@ body {
 }
 
 .machine-detail {
-    font-size: 1.6rem;
+    /* Etiquetas >= 32px (requisito 8.2 de la guia) */
+    font-size: 2rem;
     color: var(--text-muted);
-    margin: 10px 0;
+    margin: 12px 0;
     display: flex;
     align-items: center;
 }
@@ -228,11 +233,11 @@ body {
     content: '•';
     color: var(--gold);
     margin-right: 12px;
-    font-size: 2rem;
+    font-size: 2.2rem;
 }
 
 .machine-branch {
-    font-size: 1.8rem;
+    font-size: 2rem;
     color: var(--white);
     font-weight: 600;
     margin-top: 16px;
@@ -276,4 +281,27 @@ body {
 
 .background-media.fallback {
     background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-panel) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-fallback-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    opacity: 0.55;
+}
+
+.media-fallback-icon {
+    font-size: 4rem;
+    color: var(--gold);
+}
+
+.media-fallback-text {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--gold-soft);
+    letter-spacing: 2px;
 }

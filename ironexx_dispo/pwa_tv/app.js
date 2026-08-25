@@ -1,5 +1,19 @@
 // Ironexx PWA TV - Main Application Logic
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import {
+    getFirestore,
+    doc,
+    onSnapshot,
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { firebaseConfig, ESTADO_TV_COLLECTION, ESTADO_TV_DOC_ID } from './firebase-config.js';
+
 const API_BASE = 'http://localhost:3000/api';
+
+// E4: el telefono escribe en este documento con setDoc()/updateDoc(); la TV
+// escucha en tiempo real con onSnapshot() y actualiza sin recargar.
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const estadoTvRef = doc(db, ESTADO_TV_COLLECTION, ESTADO_TV_DOC_ID);
 
 let currentFocusIndex = 0;
 let machines = [];
@@ -35,6 +49,13 @@ const dummyProductsByBranch = {
 const channel = new BroadcastChannel('ironexx-ecosystem');
 
 channel.onmessage = (event) => {
+    // Defensa en profundidad (E5): BroadcastChannel ya es same-origin por
+    // spec, pero se valida explicitamente por si la arquitectura cambia.
+    if (event.origin !== window.location.origin) {
+        console.warn('BroadcastChannel: origin inesperado, mensaje ignorado', event.origin);
+        return;
+    }
+
     const { type, data } = event.data || {};
 
     if (type === 'MACHINE_SELECTED') {
@@ -57,32 +78,6 @@ function readLocalRegisteredMachines() {
 
 function saveLocalRegisteredMachines(items) {
     localStorage.setItem(localMachineStorageKey, JSON.stringify(items));
-}
-
-async function fetchRemoteRegisteredMachines() {
-    try {
-        const response = await fetch(`${API_BASE}/machines`);
-        if (!response.ok) {
-            return [];
-        }
-
-        const payload = await response.json();
-        const rows = Array.isArray(payload?.data) ? payload.data : [];
-        return rows.map((item) => ({
-            id: item.id || Date.now() + Math.random(),
-            nombre: item.nombre || 'Máquina',
-            codigo: item.codigo || `QR-${Date.now()}`,
-            sucursal: item.sucursal || 'Sucursal Centro',
-            descripcion: item.descripcion || 'Máquina registrada por QR',
-            estado: item.estado || 'Activo',
-            modelo: item.modelo || 'Sin modelo',
-            tipo: item.tipo || 'maquinaria',
-            precio: item.precio || 0,
-            source: 'remote'
-        }));
-    } catch (_) {
-        return [];
-    }
 }
 
 function appendRegisteredMachine(machine) {
@@ -138,13 +133,48 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeDateTime();
     loadMachinery();
     setupKeyboardNavigation();
-    setInterval(async () => {
-        if (!activeBranch) {
-            return;
-        }
-        await loadBranchProducts(activeBranch.id, activeBranch.nombre);
-    }, 4000);
+    setupFirestoreSync();
 });
+
+// E4: escucha en tiempo real el documento que escribe el telefono
+// (setDoc()/updateDoc()) y actualiza la UI sin recargar la pagina.
+function setupFirestoreSync() {
+    onSnapshot(
+        estadoTvRef,
+        (snapshot) => {
+            if (!snapshot.exists()) return;
+            const data = snapshot.data();
+            if (!data) return;
+            console.log('Firestore onSnapshot: nuevo estado recibido', data);
+            handleRemoteStateChange(data);
+        },
+        (error) => {
+            console.error('Firestore onSnapshot error:', error);
+        }
+    );
+}
+
+async function handleRemoteStateChange(data) {
+    const { branch, machineId, machineName } = data;
+
+    if (branch && (!activeBranch || activeBranch.nombre !== branch)) {
+        const targetBranch = branches.find((b) => b.nombre === branch);
+        if (targetBranch) {
+            activeBranch = targetBranch;
+            populateBranchOptions();
+            await loadBranchProducts(targetBranch.id, targetBranch.nombre);
+        }
+    }
+
+    if (machineId !== undefined && machineId !== null) {
+        updateMachineSelection(Number(machineId));
+    } else if (machineName) {
+        const match = machines.find((m) => m.name === machineName);
+        if (match) {
+            updateBackgroundMedia(match);
+        }
+    }
+}
 
 function initializeDateTime() {
     const updateDateTime = () => {
@@ -242,7 +272,6 @@ function populateBranchOptions() {
 
 async function loadBranchProducts(branchId, branchName) {
     const products = await getProductsByBranch(branchId);
-    const remoteMachines = await fetchRemoteRegisteredMachines();
     const localMachines = readLocalRegisteredMachines()
         .filter((item) => item.sucursal === branchName)
         .map((item) => buildMachineFromProduct({
@@ -254,19 +283,8 @@ async function loadBranchProducts(branchId, branchName) {
             estado: item.estado || 'disponible',
             imagen_url: `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080"%3E%3Crect width="100%" height="100%" fill="%230b1220"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="60" fill="%23d4af62" font-family="Arial"%3E${encodeURIComponent(item.nombre || 'MÁQUINA')}%3C/text%3E%3C/svg%3E`
         }, branchName));
-    const remoteBranchMachines = remoteMachines
-        .filter((item) => item.sucursal === branchName)
-        .map((item) => buildMachineFromProduct({
-            id: item.id || Date.now(),
-            nombre: item.nombre,
-            descripcion: item.descripcion || 'Máquina registrada por QR',
-            precio: item.precio || 0,
-            cantidad: 1,
-            estado: item.estado || 'disponible',
-            imagen_url: `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080"%3E%3Crect width="100%" height="100%" fill="%230b1220"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="60" fill="%23d4af62" font-family="Arial"%3E${encodeURIComponent(item.nombre || 'MÁQUINA')}%3C/text%3E%3C/svg%3E`
-        }, branchName));
 
-    const merged = [...products.map(product => buildMachineFromProduct(product, branchName)), ...localMachines, ...remoteBranchMachines];
+    const merged = [...products.map(product => buildMachineFromProduct(product, branchName)), ...localMachines];
     const uniqueById = new Map();
     merged.forEach((machine) => {
         if (!uniqueById.has(String(machine.id))) {
@@ -398,19 +416,47 @@ function notifyNewMachineRegistration(machine) {
     });
 }
 
+// Fallback visual real (requisito 8.3/E5 "Multimedia"): se detecta cuando el
+// recurso YA EXISTE pero falla al cargar (URL rota, red caida), no solo
+// cuando no hay ninguna imagen/video definido.
+function showMediaFallback(backgroundMedia, machineName) {
+    backgroundMedia.style.backgroundImage = 'none';
+    backgroundMedia.innerHTML = '';
+    backgroundMedia.classList.add('fallback');
+    backgroundMedia.innerHTML = `
+        <div class="media-fallback-content">
+            <span class="media-fallback-icon">⚠</span>
+            <span class="media-fallback-text">${machineName || 'IRONEXX'}</span>
+        </div>
+    `;
+}
+
 function updateBackgroundMedia(machine) {
     const backgroundMedia = document.getElementById('backgroundMedia');
+    backgroundMedia.classList.remove('fallback');
 
     if (machine.video) {
         backgroundMedia.style.backgroundImage = 'none';
-        backgroundMedia.innerHTML = `<video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;"><source src="${machine.video}" type="video/mp4"></video>`;
+        const video = document.createElement('video');
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+        video.onerror = () => showMediaFallback(backgroundMedia, machine.name);
+        video.src = machine.video;
+        backgroundMedia.innerHTML = '';
+        backgroundMedia.appendChild(video);
     } else if (machine.image) {
         backgroundMedia.innerHTML = '';
-        backgroundMedia.style.backgroundImage = `url('${machine.image}')`;
+        const preloader = new Image();
+        preloader.onload = () => {
+            backgroundMedia.style.backgroundImage = `url('${machine.image}')`;
+        };
+        preloader.onerror = () => showMediaFallback(backgroundMedia, machine.name);
+        preloader.src = machine.image;
     } else {
-        backgroundMedia.innerHTML = '';
-        backgroundMedia.style.backgroundImage = 'none';
-        backgroundMedia.classList.add('fallback');
+        showMediaFallback(backgroundMedia, machine.name);
     }
 }
 

@@ -1,9 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/notification_provider.dart';
 import 'screens/home_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Sin firebase_options.dart: en Android basta con google-services.json +
+  // el plugin de Gradle (google-services) para que initializeApp() resuelva
+  // la configuracion del proyecto automaticamente.
+  await Firebase.initializeApp();
   runApp(const IronexxApp());
 }
 
@@ -49,7 +55,7 @@ class IronexxApp extends StatelessWidget {
               ),
             ),
           ),
-          cardTheme: const CardTheme(
+          cardTheme: const CardThemeData(
             color: Color(0xFF111C2E),
             elevation: 0,
             margin: EdgeInsets.zero,

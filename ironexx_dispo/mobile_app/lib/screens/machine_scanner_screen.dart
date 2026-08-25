@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +17,16 @@ class _MachineScannerScreenState extends State<MachineScannerScreen> {
   final List<Map<String, dynamic>> _machines = [];
   Map<String, dynamic>? _selectedMachine;
   static const String _machinesKey = 'local_registered_machines';
+  bool _syncing = false;
+
+  // Mismo catalogo de ejemplo que pwa_tv/app.js (dummyProductsByBranch), para
+  // poder demostrar E4 sin depender de que haya maquinas registradas por QR
+  // (esa lista empieza vacia). Tocar un chip escribe directo a Firestore.
+  static const Map<String, List<String>> _catalogoDemo = {
+    'Sucursal Centro': ['Excavadora CAT 320', 'Retroexcavadora', 'Montacargas', 'Compactador'],
+    'Sucursal Norte': ['Bulldozer D6', 'Grúa móvil', 'Pala cargadora', 'Cortadora'],
+    'Sucursal Sur': ['Camión de volteo', 'Soldadora', 'Martillo demoledor', 'Taladro perforador'],
+  };
 
   @override
   void initState() {
@@ -64,9 +76,56 @@ class _MachineScannerScreenState extends State<MachineScannerScreen> {
           branch.contains(query);
     }).toList();
 
+    if (found.isNotEmpty) {
+      setState(() => _selectedMachine = found.first);
+      unawaited(_syncSelectionToFirestore(
+        machineId: found.first['id'],
+        machineName: found.first['nombre'],
+        branch: found.first['sucursal'],
+      ));
+      return;
+    }
+
+    // No hay coincidencia en las maquinas registradas localmente (esa lista
+    // empieza vacia hasta que se registre algo por QR) -- de todas formas se
+    // sincroniza el texto buscado como nombre de maquina. pwa_tv hace match
+    // por nombre como respaldo (ver handleRemoteStateChange en app.js).
+    setState(() => _selectedMachine = null);
+    unawaited(_syncSelectionToFirestore(machineId: null, machineName: _codeController.text.trim(), branch: null));
+  }
+
+  void _selectCatalogMachine(String name, String branch) {
+    _codeController.text = name;
     setState(() {
-      _selectedMachine = found.isNotEmpty ? found.first : null;
+      _selectedMachine = {'nombre': name, 'sucursal': branch, 'estado': 'disponible'};
     });
+    unawaited(_syncSelectionToFirestore(machineId: null, machineName: name, branch: branch));
+  }
+
+  // E4: el telefono escribe el estado seleccionado en Firestore; la PWA de
+  // la TV escucha con onSnapshot() y se actualiza sin recargar.
+  Future<void> _syncSelectionToFirestore({
+    required dynamic machineId,
+    required String? machineName,
+    required String? branch,
+  }) async {
+    if (machineName == null || machineName.isEmpty) return;
+    setState(() => _syncing = true);
+    try {
+      await FirebaseFirestore.instance.collection('estado_tv').doc('actual').set({
+        'machineId': machineId,
+        'machineName': machineName,
+        'branch': branch,
+        'updatedAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No se pudo sincronizar con la TV: $error')),
+      );
+    } finally {
+      if (mounted) setState(() => _syncing = false);
+    }
   }
 
   void _removeMachine(int index) {
@@ -133,7 +192,32 @@ class _MachineScannerScreenState extends State<MachineScannerScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 textStyle: const TextStyle(fontSize: 18),
               ),
-              child: const Text('Buscar'),
+              child: _syncing
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                    )
+                  : const Text('Buscar'),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Enviar a la TV (catálogo de ejemplo)',
+              style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: _catalogoDemo.entries
+                  .expand((entry) => entry.value.map((name) => (name, entry.key)))
+                  .map((item) => ActionChip(
+                        label: Text(item.$1, style: const TextStyle(color: Colors.white, fontSize: 12)),
+                        backgroundColor: const Color(0xFF0F3460),
+                        side: const BorderSide(color: Color(0xFFE94560)),
+                        onPressed: () => _selectCatalogMachine(item.$1, item.$2),
+                      ))
+                  .toList(),
             ),
             const SizedBox(height: 24),
             if (_selectedMachine != null) ...[

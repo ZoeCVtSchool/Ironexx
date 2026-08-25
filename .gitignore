@@ -2,10 +2,15 @@
 context.txt
 Context.md
 
-# Secretos — nunca subir
+# Secretos reales — nunca subir
 .env
 *.jks
 *.keystore
 key.properties
-google-services.json
-GoogleService-Info.plist
+
+# NOTA: google-services.json y GoogleService-Info.plist NO se excluyen a
+# proposito. Segun la propia documentacion de Firebase, no son secretos de
+# servidor (van embebidos en el cliente igual que un apiKey web) y hace falta
+# que esten en el repo para que el proyecto sea reproducible (requisito
+# E6.2/E6.4 de la guia: el profesor debe poder clonar y compilar). La
+# seguridad real la dan las reglas de Firestore, no ocultar este archivo.

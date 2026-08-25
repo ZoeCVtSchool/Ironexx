@@ -1,9 +1,10 @@
-const CACHE_NAME = 'ironexx-tv-v1';
+const CACHE_NAME = 'ironexx-tv-v2';
 const STATIC_ASSETS = [
     '/',
     '/index.html',
     '/styles.css',
     '/app.js',
+    '/firebase-config.js',
     '/manifest.json',
     '/icons/icon-192.png',
     '/icons/icon-512.png'

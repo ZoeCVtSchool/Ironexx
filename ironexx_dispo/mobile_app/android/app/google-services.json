@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "78987802365",
+    "project_id": "ironexx-extraordinaria",
+    "storage_bucket": "ironexx-extraordinaria.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78987802365:android:950d2f0762fa1735823094",
+        "android_client_info": {
+          "package_name": "com.ironexx.mobile_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5H1Knl81q4l_oSvNxtiks2j5-faqMe-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
