@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse
@@ -152,7 +153,9 @@ class ApiHandler(BaseHTTPRequestHandler):
         if path == '/api/auth/login':
             email = str(payload.get('email', '')).strip().lower()
             password = str(payload.get('password', ''))
-            valid = email in {'chandussandra@gmail.com', 'admin@ironexx.com'} and password in {'***REDACTED-PASSWORD***', '123456'}
+            demo_email = os.environ.get('IRONEXX_DEMO_EMAIL', 'admin@ironexx.com')
+            demo_password = os.environ.get('IRONEXX_DEMO_PASSWORD', '123456')
+            valid = email == demo_email.lower() and password == demo_password
             if not valid:
                 self.send_json(401, {'success': False, 'message': 'Credenciales inválidas'})
                 return

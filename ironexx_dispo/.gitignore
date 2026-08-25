@@ -56,3 +56,5 @@ Thumbs.db
 api_keys.txt
 secrets.json
 config.local.json
+__pycache__/
+*.pyc
