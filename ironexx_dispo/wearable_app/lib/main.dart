@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'screens/metrics_screen.dart';
 
 // Android Emulator must use 10.0.2.2 to reach the host machine's localhost.
 // For a physical device, replace this with the machine's LAN IP (for example 192.168.1.10).
@@ -596,11 +597,47 @@ class _WearableHomeScreenState extends State<WearableHomeScreen> with WidgetsBin
     if (_notifications.isEmpty) {
       return Scaffold(
         backgroundColor: const Color(0xFF0B1220),
-        body: Center(
-          child: Text(
-            _errorMessage ?? 'Sin notificaciones',
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: Color(0xFFF8FAFC)),
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    _errorMessage ?? 'Sin notificaciones',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Color(0xFFF8FAFC), fontSize: 10),
+                  ),
+                  const SizedBox(height: 10),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const MetricsScreen()),
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1E293B),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFFD4AF62), width: 1),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.bluetooth_rounded, size: 12, color: Color(0xFFD4AF62)),
+                          SizedBox(width: 4),
+                          Text(
+                            'Monitor BLE',
+                            style: TextStyle(fontSize: 10, color: Color(0xFFF8FAFC), fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       );
@@ -757,13 +794,29 @@ class _WearableHomeScreenState extends State<WearableHomeScreen> with WidgetsBin
                         ],
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'Centro de control',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Color(0xFF94A3B8),
-                          letterSpacing: 0.8,
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const MetricsScreen()),
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF1E293B),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: const Color(0xFFD4AF62), width: 1),
+                          ),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.bluetooth_rounded, size: 12, color: Color(0xFFD4AF62)),
+                              SizedBox(width: 4),
+                              Text(
+                                'Monitor BLE',
+                                style: TextStyle(fontSize: 10, color: Color(0xFFF8FAFC), fontWeight: FontWeight.w700),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
