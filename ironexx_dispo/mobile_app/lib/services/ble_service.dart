@@ -47,9 +47,12 @@ class BleService {
       }
 
       // E2 punto 15: comprobar que el adaptador Bluetooth este encendido
-      // antes de escanear (no solo que el permiso este concedido).
-      final adapterState = await FlutterBluePlus.adapterState.first;
-      if (adapterState != BluetoothAdapterState.on) {
+      // antes de escanear (no solo que el permiso este concedido). Con
+      // timeout: en algunos emuladores el stream de adapterState no emite
+      // de inmediato, y esto no debe colgar el boton indefinidamente.
+      final adapterState = await FlutterBluePlus.adapterState.first
+          .timeout(const Duration(seconds: 3), onTimeout: () => BluetoothAdapterState.unknown);
+      if (adapterState == BluetoothAdapterState.off) {
         notificationProvider.setError('Bluetooth está apagado. Actívalo e intenta de nuevo.');
         return;
       }
