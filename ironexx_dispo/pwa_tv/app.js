@@ -214,7 +214,6 @@ function toCurrency(amount) {
 function buildMachineFromProduct(product, branchName) {
     const details = [
         product.descripcion ? `Descripción: ${product.descripcion}` : 'Sin descripción',
-        `Precio: ${toCurrency(product.precio)}`,
         `Cantidad: ${product.cantidad ?? 0}`,
         `Estado: ${product.estado ?? 'disponible'}`,
     ];
