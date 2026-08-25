@@ -1,0 +1,141 @@
+<div class="nosotros-container">
+  <div class="nosotros-header">
+    <h1>Sobre Nosotros</h1>
+    <p>Tu socio confiable en maquinaria de construcción desde 2014</p>
+  </div>
+
+  <div class="nosotros-intro">
+    <div class="intro-image">
+      <img src="assets/images/catalogo/cargador-destacado.jpeg" alt="Cargador industrial - Nuestra historia">
+    </div>
+    <div class="intro-content">
+      <h2>Nuestra Historia</h2>
+      <p>
+        MaquiConstrucción nació en 2014 con la visión de revolucionar el mercado de maquinaria pesada
+        en México. Comenzamos como un pequeño distribuidor local y hoy somos líderes en la comercialización
+        de equipos de construcción de las marcas más prestigiosas del mundo.
+      </p>
+      <p>
+        Nuestra pasión por la excelencia y el compromiso con nuestros clientes nos ha permitido crecer
+        de manera sostenible, expandiendo nuestra cobertura a toda la República Mexicana y Centroamérica.
+      </p>
+      <div class="intro-stats">
+        <div class="stat">
+          <span class="stat-number">10+</span>
+          <span class="stat-label">Años de Experiencia</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">500+</span>
+          <span class="stat-label">Equipos Vendidos</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Clientes Satisfechos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nosotros-mision-vision">
+    <div class="mision-vision-grid">
+      <div class="mision-card">
+        <div class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2.5l2.7 5.7 6.3.9-4.5 4.4 1.1 6.2L12 0 6.4 19.7l1.1-6.2L3 9.1l6.3-.9L12 2.5z"/></svg>
+        </div>
+        <h3>Misión</h3>
+        <p>
+          Proporcionar soluciones integrales en maquinaria de construcción de alta calidad,
+          respaldadas por un servicio excepcional y soporte técnico especializado, contribuyendo
+          al desarrollo y crecimiento de la industria de la construcción en México y Latinoamérica.
+        </p>
+      </div>
+
+      <div class="vision-card">
+        <div class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 4.5A9.5 9.5 0 0 0 2.5 12c1.5 2.9 4.6 5.5 9.5 7.5 4.9-2 8-4.6 9.5-7.5A9.5 9.5 0 0 0 12 4.5zm0 3.2A4.3 4.3 0 1 1 12 16a4.3 4.3 0 0 1 0-8.3zm0 2.1a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4z"/></svg>
+        </div>
+        <h3>Visión</h3>
+        <p>
+          Ser la empresa líder en distribución y servicio de maquinaria pesada en la región,
+          reconocida por nuestra innovación, calidad de servicio y compromiso con el desarrollo
+          sostenible de la industria de la construcción.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nosotros-valores">
+    <h2>Nuestros Valores</h2>
+    <div class="valores-grid">
+      <div class="valor-card" *ngFor="let valor of valores">
+        <div class="valor-icon" [innerHTML]="valor.icono"></div>
+        <h3>{{ valor.titulo }}</h3>
+        <p>{{ valor.descripcion }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nosotros-equipo">
+    <h2>Nuestro Equipo</h2>
+    <p class="equipo-intro">
+      Contamos con un equipo de profesionales altamente capacitados y con amplia experiencia
+      en el sector de la construcción y maquinaria pesada.
+    </p>
+    <div class="equipo-grid">
+      <div class="equipo-card" *ngFor="let miembro of equipo">
+        <div class="equipo-image">
+          <img [src]="miembro.imagen" [alt]="miembro.nombre">
+        </div>
+        <div class="equipo-content">
+          <h3>{{ miembro.nombre }}</h3>
+          <p class="equipo-cargo">{{ miembro.cargo }}</p>
+          <p class="equipo-experiencia">{{ miembro.experiencia }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nosotros-certificaciones">
+    <h2>Certificaciones y Alianzas</h2>
+    <div class="certificaciones-content">
+      <div class="certificaciones-text">
+        <p>
+          Estamos orgullosos de contar con las certificaciones más importantes del sector y
+          alianzas estratégicas con los fabricantes líderes mundiales en maquinaria de construcción.
+        </p>
+        <div class="certificaciones-list">
+          <div class="certificacion-item">
+            <span class="cert-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.5 5.1L20 8.2l-4 3.9.9 5.4L12 0l-4.9 2.5.9-5.4L4 8.2l5.5-.6L12 2.5zm-6 13.5h12v2H6v-2zm0 4h12v2H6v-2z"/></svg></span>
+            <span>Distribuidor Autorizado Caterpillar</span>
+          </div>
+          <div class="certificacion-item">
+            <span class="cert-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.5 5.1L20 8.2l-4 3.9.9 5.4L12 0l-4.9 2.5.9-5.4L4 8.2l5.5-.6L12 2.5zm-6 13.5h12v2H6v-2zm0 4h12v2H6v-2z"/></svg></span>
+            <span>Partner John Deere Construction</span>
+          </div>
+          <div class="certificacion-item">
+            <span class="cert-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.5 5.1L20 8.2l-4 3.9.9 5.4L12 0l-4.9 2.5.9-5.4L4 8.2l5.5-.6L12 2.5zm-6 13.5h12v2H6v-2zm0 4h12v2H6v-2z"/></svg></span>
+            <span>Certificación ISO 9001:2015</span>
+          </div>
+          <div class="certificacion-item">
+            <span class="cert-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.5 5.1L20 8.2l-4 3.9.9 5.4L12 0l-4.9 2.5.9-5.4L4 8.2l5.5-.6L12 2.5zm-6 13.5h12v2H6v-2zm0 4h12v2H6v-2z"/></svg></span>
+            <span>Miembro de la Cámara Mexicana de la Industria de la Construcción</span>
+          </div>
+        </div>
+      </div>
+      <div class="certificaciones-image">
+        <img src="assets/IRONEX-removebg-preview.png" alt="Ironex - Certificaciones">
+      </div>
+    </div>
+  </div>
+
+  <div class="nosotros-cta">
+    <div class="cta-content">
+      <h2>¿Listo para trabajar con nosotros?</h2>
+      <p>Descubre cómo podemos ayudarte con tus proyectos de construcción</p>
+      <div class="cta-buttons">
+        <a href="/catalogo" class="cta-btn primary">Ver Catálogo</a>
+        <a href="/contacto" class="cta-btn secondary">Contactar</a>
+      </div>
+    </div>
+  </div>
+</div>

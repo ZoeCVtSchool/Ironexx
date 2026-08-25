@@ -1,0 +1,61 @@
+<nav class="navbar" *ngIf="!isDashboardPage">
+  <div class="nav-container">
+    <div class="brand-section">
+      <a href="/" class="logo-brand">
+        <img src="assets/IRONEX-removebg-preview.png" alt="Ironex" class="logo-image-large"
+          style="height: 110px; width: auto;"> </a>
+    </div>
+
+    <div class="nav-links">
+      <a href="/catalogo" class="nav-link">Catálogo</a>
+      <a href="/nosotros" class="nav-link">Nosotros</a>
+      <a href="/contacto" class="nav-link">Contacto</a>
+      <a href="/cotizacion" class="nav-link nav-cta">Cotizar</a>
+      <a *ngIf="!isLoggedIn" href="/login" class="nav-link nav-login">Iniciar Sesión</a>
+      <div *ngIf="isLoggedIn" class="user-menu">
+        <span class="user-welcome">Bienvenido, {{ userName }}</span>
+        <button class="logout-btn" (click)="logout()">Cerrar Sesión</button>
+      </div>
+    </div>
+
+    <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" aria-label="Menú">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" [class.active]="mobileMenuActive">
+    <div class="mobile-menu-content">
+      <a href="/catalogo" class="mobile-nav-link" (click)="toggleMobileMenu()">Catálogo</a>
+      <a href="/nosotros" class="mobile-nav-link" (click)="toggleMobileMenu()">Nosotros</a>
+      <a href="/contacto" class="mobile-nav-link" (click)="toggleMobileMenu()">Contacto</a>
+      <a href="/cotizacion" class="mobile-nav-link mobile-cta" (click)="toggleMobileMenu()">Cotizar</a>
+      <a *ngIf="!isLoggedIn" href="/login" class="mobile-nav-link" (click)="toggleMobileMenu()">Iniciar Sesión</a>
+      <div *ngIf="isLoggedIn" class="mobile-user-section">
+        <span class="mobile-user-welcome">Bienvenido, {{ userName }}</span>
+        <a href="/login" class="mobile-nav-link" (click)="logout(); toggleMobileMenu()">Cerrar Sesión</a>
+      </div>
+      <a href="/terminos-de-uso" class="mobile-nav-link" (click)="toggleMobileMenu()">Términos de Uso</a>
+    </div>
+  </div>
+</nav>
+
+<main class="main-content" [class.dashboard-main]="isDashboardPage">
+  <router-outlet></router-outlet>
+</main>
+
+<app-footer *ngIf="!isDashboardPage"></app-footer>
+
+<!-- 🔮 Sistema Global de Notificaciones Toast UX 
+<div class="toast-overlay" *ngIf="notification$ | async as notif">
+  <div class="toast-card" [ngClass]="notif.type">
+    <span class="toast-icon">
+      {{ notif.type === 'success' ? '✅' : notif.type === 'error' ? '❌' : 'ℹ️' }}
+    </span>
+    <span class="toast-message">{{ notif.message }}</span>
+  </div>
+</div>
+
+-->

@@ -1,0 +1,150 @@
+<div class="catalogo-container">
+  <!-- Carrito Flotante -->
+  <div class="carrito-flotante" *ngIf="isLoggedIn && carrito.length > 0">
+    <button class="carrito-btn" (click)="abrirCarrito()">
+      🛒 Carrito ({{ getTotalItemsCarrito() }})
+    </button>
+  </div>
+
+  <!-- Modal del Carrito -->
+  <div class="carrito-modal" *ngIf="showCarrito" [class.active]="showCarrito">
+    <div class="carrito-content">
+      <div class="carrito-header">
+        <h3>Tu Carrito</h3>
+        <button class="cerrar-carrito" (click)="cerrarCarrito()">×</button>
+      </div>
+      
+      <div class="carrito-items">
+        <div class="carrito-item" *ngFor="let item of carrito; let i = index">
+          <div class="item-info">
+            <h4>{{ item.nombre }}</h4>
+            <p>Precio: ${{ item.precio.toLocaleString() }}</p>
+            <p>Cantidad: {{ item.cantidad || 0 }}</p>
+          </div>
+          <div class="item-total">
+            <p>${{ (item.precio * (item.cantidad || 0)).toLocaleString() }}</p>
+            <button class="eliminar-btn" (click)="eliminarDelCarrito(i)">Eliminar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carrito-total">
+        <h3>Total: ${{ getTotalCarrito().toLocaleString() }}</h3>
+      </div>
+
+      <div class="carrito-form">
+        <h4>Datos para el Envío</h4>
+        <form>
+          <input type="text" [(ngModel)]="formData.nombre" placeholder="Nombre completo" name="nombre" required>
+          <input type="email" [(ngModel)]="formData.email" placeholder="Email" name="email" required>
+          <input type="tel" [(ngModel)]="formData.telefono" placeholder="Teléfono" name="telefono" required>
+          <input type="text" [(ngModel)]="formData.direccion" placeholder="Dirección de envío" name="direccion" required>
+        </form>
+      </div>
+
+      <div class="carrito-actions">
+        <div id="paypal-button-container"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="catalogo-header">
+    <h1>Nuestro Catálogo</h1>
+    <p>Descubre la maquinaria de construcción más avanzada del mercado</p>
+    <div *ngIf="isLoggedIn" class="user-welcome-catalogo">
+      <p>Bienvenido, {{ userName }} 👋</p>
+    </div>
+  </div>
+
+  <!-- Buscador -->
+  <div class="buscador-container">
+    <div class="buscador-field">
+      <svg class="buscador-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="6.5"></circle>
+        <path d="M16 16L21 21"></path>
+      </svg>
+      <input 
+        type="text" 
+        [(ngModel)]="terminoBusqueda" 
+        (input)="onBusquedaChange()" 
+        placeholder="Buscar productos por nombre, categoría o descripción..."
+        class="buscador-input"
+      >
+    </div>
+    <div *ngIf="terminoBusqueda" class="resultados-info">
+      <span *ngIf="productosFiltrados.length > 0">
+        {{ productosFiltrados.length }} resultado(s) encontrado(s)
+      </span>
+      <span *ngIf="productosFiltrados.length === 0" class="no-resultados">
+        No se encontraron resultados para "{{ terminoBusqueda }}"
+      </span>
+    </div>
+  </div>
+
+  <div class="catalogo-intro">
+    <div class="intro-content">
+      <h2>Equipos de Primera Calidad</h2>
+      <p>
+        En MaquiConstrucción ofrecemos una amplia gama de maquinaria pesada nueva y usada,
+        con garantía y soporte técnico especializado. Nuestros equipos provienen de las mejores
+        marcas del mundo y están listos para afrontar cualquier desafío en tu proyecto de construcción.
+      </p>
+      <div class="intro-stats">
+        <div class="stat">
+          <span class="stat-number">500+</span>
+          <span class="stat-label">Equipos Disponibles</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">15+</span>
+          <span class="stat-label">Marcas Representadas</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">24/7</span>
+          <span class="stat-label">Soporte Técnico</span>
+        </div>
+      </div>
+    </div>
+    <div class="intro-image" [ngStyle]="{'background-image': 'url(assets/IRONEX-removebg-preview.png)'}">
+    </div>
+  </div>
+
+
+  <div class="productos-destacados">
+    <h2>Catálogo de Productos Disponibles</h2>
+    <div class="productos-grid">
+      <div class="producto-card" *ngFor="let producto of productosFiltrados">
+        <div class="producto-image">
+          <img [src]="producto.imagen || '/assets/images/placeholder.svg'" [alt]="producto.nombre" (error)="onImageError($event)">
+          <div class="producto-badge">Destacado</div>
+        </div>
+        <div class="producto-content">
+          <h3>{{ producto.nombre }}</h3>
+          <p class="producto-categoria">{{ producto.categoria }}</p>
+          <p class="producto-descripcion">{{ producto.descripcion }}</p>
+          <div class="producto-footer">
+            <span class="producto-precio">${{ producto.precio.toLocaleString() }}</span>
+            <button *ngIf="isLoggedIn" class="comprar-btn" (click)="agregarAlCarrito(producto)">🛒 Comprar</button>
+            <button *ngIf="!isLoggedIn" class="login-btn" onclick="window.location.href='/login'">Inicia Sesión</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="catalogo-cta" *ngIf="!isLoggedIn">
+    <div class="cta-content">
+      <h2>¿Quieres comprar nuestros productos?</h2>
+      <p>Inicia sesión para acceder a nuestro sistema de compras y pedidos</p>
+      <div class="cta-buttons">
+        <a href="/login" class="cta-btn primary">Iniciar Sesión</a>
+        <a href="https://wa.me/5210000000000" target="_blank" class="cta-btn secondary">
+          <span class="wa-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.95A9.42 9.42 0 0 0 12.05 2a9.62 9.62 0 0 0-8.2 14.6L2 22l5.5-1.45A9.61 9.61 0 0 0 12.05 22a9.43 9.43 0 0 0 6.99-3.05 9.95 9.95 0 0 0 0-14.01Zm-6.99 14.7c-1.26 0-2.5-.34-3.58-.98l-.26-.15-3.26.86.87-3.17-.17-.26A7.73 7.73 0 0 1 4.32 12a7.72 7.72 0 1 1 13.45 5.46 7.65 7.65 0 0 1-6.66 2.19Zm4.2-5.77c-.23-.12-1.37-.68-1.58-.75-.21-.08-.37-.12-.52.12-.15.23-.58.75-.71.9-.13.15-.26.17-.48.06-.23-.12-.96-.35-1.82-1.12-.67-.6-1.12-1.33-1.25-1.56-.13-.23-.02-.35.1-.46.1-.1.23-.26.34-.39.11-.13.15-.23.23-.38.08-.15.04-.29-.02-.4-.06-.12-.52-1.26-.71-1.72-.19-.46-.38-.39-.52-.4h-.45c-.15 0-.4.06-.61.29-.2.23-.77.75-.77 1.82 0 1.08.79 2.1.9 2.25.11.15 1.54 2.34 3.74 3.28.52.23.93.36 1.25.46.53.17 1.02.15 1.4.09.43-.06 1.37-.56 1.56-1.1.19-.54.19-.99.13-1.09-.06-.1-.21-.16-.45-.28Z"/></svg>
+          </span>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<nav class="navbar" *ngIf="!isDashboardPage">
+  <div class="nav-container">
+    <div class="brand-section">
+      <a href="/" class="logo-brand">
+        <img src="assets/IRONEX-removebg-preview.png" alt="Ironex" class="logo-image-large">
+      </a>
+    </div>
+
+    <div class="nav-links">
+      <a href="/catalogo" class="nav-link">Catálogo</a>
+      <a href="/nosotros" class="nav-link">Nosotros</a>
+      <a href="/contacto" class="nav-link">Contacto</a>
+      <a href="/cotizacion" class="nav-link nav-cta">Cotizar</a>
+      <div
+        class="event-menu-wrapper"
+        (pointerenter)="openEventMenu()"
+        (pointerleave)="closeEventMenu()"
+      >
+        <button
+          type="button"
+          class="nav-link nav-event"
+          [attr.aria-expanded]="eventMenuOpen"
+          aria-haspopup="true"
+        >
+          Eventos de temporada
+        </button>
+
+        <div class="event-menu-panel" *ngIf="eventMenuOpen">
+          <p class="event-menu-title">Menú interactivo</p>
+          <div class="event-menu-grid">
+            <a
+              *ngFor="let item of eventMenuItems"
+              [href]="item.href"
+              class="event-menu-card"
+            >
+              <strong>{{ item.label }}</strong>
+              <span>{{ item.description }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <a *ngIf="!isLoggedIn" href="/login" class="nav-link nav-login">Iniciar Sesión</a>
+      <div *ngIf="isLoggedIn" class="user-menu">
+        <span class="user-welcome">Bienvenido, {{ userName }}</span>
+        <button class="logout-btn" (click)="logout()">Cerrar Sesión</button>
+      </div>
+    </div>
+
+    <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" aria-label="Menú">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" [class.active]="mobileMenuActive">
+    <div class="mobile-menu-content">
+      <a href="/catalogo" class="mobile-nav-link" (click)="toggleMobileMenu()">Catálogo</a>
+      <a href="/nosotros" class="mobile-nav-link" (click)="toggleMobileMenu()">Nosotros</a>
+      <a href="/contacto" class="mobile-nav-link" (click)="toggleMobileMenu()">Contacto</a>
+      <a href="/cotizacion" class="mobile-nav-link mobile-cta" (click)="toggleMobileMenu()">Cotizar</a>
+      <a *ngIf="!isLoggedIn" href="/login" class="mobile-nav-link" (click)="toggleMobileMenu()">Iniciar Sesión</a>
+      <div *ngIf="isLoggedIn" class="mobile-user-section">
+        <span class="mobile-user-welcome">Bienvenido, {{ userName }}</span>
+        <a href="/login" class="mobile-nav-link" (click)="logout(); toggleMobileMenu()">Cerrar Sesión</a>
+      </div>
+      <a href="/terminos-de-uso" class="mobile-nav-link" (click)="toggleMobileMenu()">Términos de Uso</a>
+    </div>
+  </div>
+</nav>
+
+<section *ngIf="!isDashboardPage" class="seasonal-banner">
+  <div class="seasonal-banner-copy">
+    <span class="seasonal-badge">{{ seasonalTheme.badge }}</span>
+    <h2>{{ seasonalTheme.title }}</h2>
+    <p>{{ seasonalTheme.message }}</p>
+  </div>
+  <a [href]="seasonalTheme.ctaHref" class="seasonal-banner-action">{{ seasonalTheme.ctaLabel }}</a>
+</section>
+
+<main
+  class="main-content"
+  [class.dashboard-main]="isDashboardPage"
+  [style.background]="!isDashboardPage ? seasonalTheme.mainBackground : null"
+>
+  <router-outlet></router-outlet>
+</main>
+
+<app-footer *ngIf="!isDashboardPage"></app-footer>

@@ -1,0 +1,39 @@
+<div class="login-container">
+  <!-- Mensaje de éxito -->
+  <div *ngIf="showSuccessMessage" class="success-message">
+    <div class="success-content">
+      <span class="success-icon">✓</span>
+      <p>¡Usuario registrado con éxito!</p>
+      <small>Ahora puedes iniciar sesión con tus credenciales</small>
+    </div>
+  </div>
+
+  <!-- Formulario de Login -->
+  <div *ngIf="!showRegister; else registerForm" class="login-form-container">
+    <h2>Iniciar Sesión</h2>
+    
+    <div class="login-step">
+      <form (ngSubmit)="login()" #loginForm="ngForm">
+        <input type="email" name="email" [(ngModel)]="loginData.email" placeholder="Email" required />
+        <input type="password" name="password" [(ngModel)]="loginData.password" placeholder="Contraseña" required />
+        <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" style="margin: 15px 0;"></div>
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+
+    <p class="toggle-text">¿No tienes cuenta? <a href="#" (click)="toggleRegister(); $event.preventDefault()">Regístrate</a></p>
+  </div>
+
+  <!-- Formulario de Registro -->
+  <ng-template #registerForm>
+    <h2>Crear Cuenta</h2>
+    <form (ngSubmit)="register()" #registerForm="ngForm">
+      <input type="email" name="email" [(ngModel)]="registerData.email" placeholder="Email" required />
+      <input type="text" name="username" [(ngModel)]="registerData.username" placeholder="Nombre de usuario" required />
+      <input type="password" name="password" [(ngModel)]="registerData.password" placeholder="Contraseña" required />
+      <input type="password" name="confirmPassword" [(ngModel)]="registerData.confirmPassword" placeholder="Confirmar contraseña" required />
+      <button type="submit">Registrarse</button>
+    </form>
+    <p class="toggle-text">¿Ya tienes cuenta? <a href="#" (click)="toggleRegister(); $event.preventDefault()">Inicia sesión</a></p>
+  </ng-template>
+</div>

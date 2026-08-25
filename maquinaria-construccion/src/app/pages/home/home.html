@@ -1,0 +1,128 @@
+<div class="home-container">
+  <section class="hero">
+    <div class="hero-content">
+      <span class="eyebrow">Soluciones industriales para obras exigentes</span>
+      <h1>Tu aliado estratégico en maquinaria de construcción.</h1>
+      <p>
+        Equipos de alto rendimiento, asesoría técnica especializada y soporte integral para asegurarte
+        productividad, seguridad y cumplimiento en cada proyecto.
+      </p>
+
+      <div class="hero-meta">
+        <div class="meta-item">
+          <span class="meta-icon">✓</span>
+          <span>Stock disponible</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-icon">✓</span>
+          <span>Entrega ágil</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-icon">✓</span>
+          <span>Soporte 24/7</span>
+        </div>
+      </div>
+
+      <div class="hero-buttons">
+        <a href="/catalogo" class="btn-primary">Ver catálogo</a>
+        <a href="/cotizacion" class="btn-secondary">Solicitar cotización</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-label="Maquinaria industrial">
+      <div class="hero-card hero-card-main">
+        <img src="assets/images/catalogo/intro.jpg" alt="Maquinaria industrial de construcción">
+      </div>
+      <div class="hero-badge badge-top">
+        <span class="badge-title">+500</span>
+        <span class="badge-text">equipos activos</span>
+      </div>
+      <div class="hero-badge badge-bottom">
+        <span class="badge-title">10+</span>
+        <span class="badge-text">años de experiencia</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="servicios">
+    <div class="section-header">
+      <h2>Nuestros servicios</h2>
+      <p>Soluciones completas para mejorar la rentabilidad y ejecución de tus proyectos.</p>
+    </div>
+
+    <div class="service-spotlight">
+      <div class="service-spotlight-copy">
+        <span class="spotlight-label">Especialidad</span>
+        <h3>{{ highlightedService.titulo }}</h3>
+        <p>{{ highlightedService.descripcion }}</p>
+      </div>
+      <div class="service-spotlight-icon">
+        <svg *ngIf="highlightedService.titulo === 'Venta de Maquinaria'" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M11 42h8l5-18h17l5 18h8v4H11v-4zm8-2l4-12h16l4 12H19zm8-26h9l2 6h-13l2-6zm-3 13h15v4H24v-4z"/>
+        </svg>
+        <svg *ngIf="highlightedService.titulo === 'Alquiler de Equipos'" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M16 46V18h26v28H16zm4-4h18V22H20v20zm26-14h6v18h-6v-18zm-28-2h4v4h-4v-4zm0 8h4v4h-4v-4zm24-18h6v6h-6v-6zM12 50h40v4H12v-4z"/>
+        </svg>
+        <svg *ngIf="highlightedService.titulo === 'Servicio Técnico'" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M19 18l9-9 12 12-9 9-12-12zm7 7l5 5-9 9-5-5 9-9zm-7 17l13-13 5 5-13 13-5-5zm31-8h-8v-4h8v4zm-38 0h-8v-4h8v4zm29-20h4v8h-4v-8zm-30 0h4v8h-4v-8zM32 22v8h-4v-8h4zm0 18v8h-4v-8h4zM50 32v4H14v-4h36z"/>
+        </svg>
+        <svg *ngIf="highlightedService.titulo === 'Asesoría Especializada'" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M32 12c-8 0-14 6-14 14 0 8 6 14 14 14s14-6 14-14c0-8-6-14-14-14zm0 4a10 10 0 0 1 10 10c0 5-4 10-10 10s-10-5-10-10 4-10 10-10zm-8 30h16v4H24v-4zm-4 8h24v4H20v-4z"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="servicios-grid">
+      <div
+        class="servicio-card"
+        *ngFor="let servicio of servicios; let i = index"
+        (pointerenter)="setHighlightedService(i)"
+        (pointerleave)="clearHighlightedService()"
+        [class.is-highlighted]="highlightedService === servicio"
+      >
+        <div class="servicio-icon">
+          <svg *ngIf="i === 0" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M11 42h8l5-18h17l5 18h8v4H11v-4zm8-2l4-12h16l4 12H19zm8-26h9l2 6h-13l2-6zm-3 13h15v4H24v-4z"/>
+          </svg>
+          <svg *ngIf="i === 1" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M16 46V18h26v28H16zm4-4h18V22H20v20zm26-14h6v18h-6v-18zm-28-2h4v4h-4v-4zm0 8h4v4h-4v-4zm24-18h6v6h-6v-6zM12 50h40v4H12v-4z"/>
+          </svg>
+          <svg *ngIf="i === 2" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M19 18l9-9 12 12-9 9-12-12zm7 7l5 5-9 9-5-5 9-9zm-7 17l13-13 5 5-13 13-5-5zm31-8h-8v-4h8v4zm-38 0h-8v-4h8v4zm29-20h4v8h-4v-8zm-30 0h4v8h-4v-8zM32 22v8h-4v-8h4zm0 18v8h-4v-8h4zM50 32v4H14v-4h36z"/>
+          </svg>
+          <svg *ngIf="i === 3" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M32 12c-8 0-14 6-14 14 0 8 6 14 14 14s14-6 14-14c0-8-6-14-14-14zm0 4a10 10 0 0 1 10 10c0 5-4 10-10 10s-10-5-10-10 4-10 10-10zm-8 30h16v4H24v-4zm-4 8h24v4H20v-4z"/>
+          </svg>
+        </div>
+        <h3>{{ servicio.titulo }}</h3>
+        <p>{{ servicio.descripcion }}</p>
+        <a [href]="servicio.enlace" class="servicio-link">Más información</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="estadisticas">
+    <div class="estadisticas-grid">
+      <div class="estadistica-card" *ngFor="let stat of estadisticas">
+        <div class="estadistica-numero">{{ stat.numero }}</div>
+        <div class="estadistica-descripcion">{{ stat.descripcion }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>¿Listo para impulsar tu proyecto?</h2>
+      <p>Contacta con nuestros expertos y obtén la maquinaria que necesita tu operación.</p>
+      <div class="cta-buttons">
+        <a href="/contacto" class="btn-primary">Contactar ahora</a>
+        <a href="https://wa.me/5210000000000" target="_blank" class="btn-whatsapp">
+          <span class="wa-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.95A9.42 9.42 0 0 0 12.05 2a9.62 9.62 0 0 0-8.2 14.6L2 22l5.5-1.45A9.61 9.61 0 0 0 12.05 22a9.43 9.43 0 0 0 6.99-3.05 9.95 9.95 0 0 0 0-14.01Zm-6.99 14.7c-1.26 0-2.5-.34-3.58-.98l-.26-.15-3.26.86.87-3.17-.17-.26A7.73 7.73 0 0 1 4.32 12a7.72 7.72 0 1 1 13.45 5.46 7.65 7.65 0 0 1-6.66 2.19Zm4.2-5.77c-.23-.12-1.37-.68-1.58-.75-.21-.08-.37-.12-.52.12-.15.23-.58.75-.71.9-.13.15-.26.17-.48.06-.23-.12-.96-.35-1.82-1.12-.67-.6-1.12-1.33-1.25-1.56-.13-.23-.02-.35.1-.46.1-.1.23-.26.34-.39.11-.13.15-.23.23-.38.08-.15.04-.29-.02-.4-.06-.12-.52-1.26-.71-1.72-.19-.46-.38-.39-.52-.4h-.45c-.15 0-.4.06-.61.29-.2.23-.77.75-.77 1.82 0 1.08.79 2.1.9 2.25.11.15 1.54 2.34 3.74 3.28.52.23.93.36 1.25.46.53.17 1.02.15 1.4.09.43-.06 1.37-.56 1.56-1.1.19-.54.19-.99.13-1.09-.06-.1-.21-.16-.45-.28Z"/></svg>
+          </span>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

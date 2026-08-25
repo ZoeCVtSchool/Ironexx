@@ -1,0 +1,691 @@
+.catalogo-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.catalogo-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.catalogo-header h1 {
+  font-size: 2.5em;
+  color: var(--color-primary);
+  margin: 0 0 15px 0;
+  font-weight: 700;
+}
+
+.catalogo-header p {
+  font-size: 1.2em;
+  color: var(--color-gray-dark);
+  margin: 0;
+}
+
+.catalogo-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  margin-bottom: 60px;
+  align-items: center;
+}
+
+.intro-content h2 {
+  color: var(--color-primary);
+  font-size: 2em;
+  margin: 0 0 20px 0;
+  font-weight: 600;
+}
+
+.intro-content p {
+  color: var(--color-gray-dark);
+  line-height: 1.7;
+  margin: 0 0 30px 0;
+  font-size: 1.1em;
+}
+
+.intro-stats {
+  display: flex;
+  gap: 30px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5em;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  color: var(--color-gray-dark);
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.intro-image {
+  height: 400px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.intro-image img {
+  display: none;
+}
+
+.catalogo-categorias h2,
+.productos-destacados h2 {
+  font-size: 2em;
+  color: var(--color-primary);
+  text-align: center;
+  margin: 0 0 40px 0;
+  font-weight: 600;
+}
+
+.categorias-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.categoria-card {
+  background-color: var(--color-white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.categoria-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.categoria-image {
+  height: 200px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.categoria-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.categoria-card:hover .categoria-image img {
+  transform: scale(1.05);
+}
+
+.categoria-content {
+  padding: 25px;
+}
+
+.categoria-content h3 {
+  color: var(--color-primary);
+  font-size: 1.4em;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.categoria-content p {
+  color: var(--color-gray-dark);
+  margin: 0 0 20px 0;
+  line-height: 1.6;
+}
+
+.categoria-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.productos-count {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.ver-mas-btn {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.ver-mas-btn:hover {
+  background-color: color-mix(in srgb, var(--color-accent) 80%, black);
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.producto-card {
+  background-color: var(--color-white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+}
+
+.producto-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.producto-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.producto-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.producto-content {
+  padding: 20px;
+}
+
+.producto-content h3 {
+  color: var(--color-primary);
+  font-size: 1.2em;
+  margin: 0 0 5px 0;
+  font-weight: 600;
+}
+
+.producto-categoria {
+  color: var(--color-accent);
+  font-size: 0.9em;
+  font-weight: 500;
+  margin: 0 0 10px 0;
+}
+
+.producto-descripcion {
+  color: var(--color-gray-dark);
+  margin: 0 0 15px 0;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+.producto-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.producto-precio {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+.cotizar-btn {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.cotizar-btn:hover {
+  background-color: color-mix(in srgb, var(--color-accent) 80%, black);
+}
+
+.catalogo-cta {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  padding: 50px 30px;
+  border-radius: 8px;
+  text-align: center;
+  color: #fff;
+  margin-top: 60px;
+}
+
+.cta-content h2 {
+  font-size: 2em;
+  margin: 0 0 15px 0;
+  font-weight: 600;
+}
+
+.cta-content p {
+  font-size: 1.1em;
+  margin: 0 0 30px 0;
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.3s ease;
+}
+
+.cta-btn.primary {
+  background-color: #ff6b35;
+  color: #111;
+}
+
+.cta-btn.secondary {
+  background-color: #25d366;
+  color: #222b45;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Carrito Flotante */
+.carrito-flotante {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.carrito-btn {
+  background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  transition: all 0.3s ease;
+}
+
+.carrito-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+/* Modal del Carrito */
+.carrito-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.carrito-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.carrito-content {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.carrito-modal.active .carrito-content {
+  transform: scale(1);
+}
+
+.carrito-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.carrito-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.5em;
+}
+
+.cerrar-carrito {
+  background: none;
+  border: none;
+  font-size: 2em;
+  cursor: pointer;
+  color: #7f8c8d;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cerrar-carrito:hover {
+  color: #e74c3c;
+}
+
+.carrito-items {
+  padding: 20px;
+}
+
+.carrito-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 10px;
+}
+
+.carrito-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.item-info h4 {
+  margin: 0 0 5px 0;
+  color: #2c3e50;
+}
+
+.item-info p {
+  margin: 0 0 3px 0;
+  color: #7f8c8d;
+  font-size: 0.9em;
+}
+
+.item-total {
+  text-align: right;
+}
+
+.item-total p {
+  margin: 0 0 5px 0;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.eliminar-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+.eliminar-btn:hover {
+  background: #c0392b;
+}
+
+.carrito-total {
+  padding: 20px;
+  border-top: 2px solid #ff6b35;
+  text-align: center;
+}
+
+.carrito-total h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.3em;
+}
+
+.carrito-form {
+  padding: 20px;
+  background: #f8f9fa;
+}
+
+.carrito-form h4 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+}
+
+.carrito-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.carrito-form input:focus {
+  outline: none;
+  border-color: #ff6b35;
+}
+
+.carrito-actions {
+  padding: 20px;
+  text-align: center;
+}
+
+.paypal-btn {
+  background: linear-gradient(135deg, #0070ba 0%, #00457c 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+}
+
+.paypal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 112, 186, 0.3);
+}
+
+/* Welcome Message */
+.user-welcome-catalogo {
+  background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  display: inline-block;
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+/* Botones de Compra y Login */
+.comprar-btn {
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.comprar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+}
+
+.login-btn {
+  background: linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
+}
+
+.categoria-precio {
+  color: #ff6b35;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .catalogo-intro,
+  .categorias-grid,
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-stats {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .categoria-footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .producto-footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .catalogo-header h1 {
+    font-size: 2em;
+  }
+
+  .intro-content h2 {
+    font-size: 1.5em;
+  }
+
+  .carrito-content {
+    width: 95%;
+    margin: 10px;
+  }
+
+  .carrito-flotante {
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+/* Botón de procesar pago - Estilo exacto PayPal */
+.procesar-pago-btn {
+  width: 100%;
+  height: 45px;
+  padding: 0 20px;
+  background: #0070ba;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: background 0.2s ease;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: center;
+  line-height: 45px;
+  display: block;
+}
+
+.procesar-pago-btn:hover {
+  background: #003087;
+}
+
+.procesar-pago-btn:active {
+  background: #002a6c;
+}
+
+/* Estilos para botones de PayPal */
+#paypal-button-container {
+  margin-top: 20px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+#paypal-button-container iframe {
+  border-radius: 6px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+#paypal-button-container iframe:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Contenedor de botones de PayPal */
+.paypal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.paypal-buttons .paypal-button {
+  min-height: 45px !important;
+  border-radius: 6px !important;
+  transition: all 0.3s ease !important;
+}
+
+.paypal-buttons .paypal-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2) !important;
+}

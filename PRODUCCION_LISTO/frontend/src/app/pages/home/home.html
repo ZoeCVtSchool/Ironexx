@@ -1,0 +1,56 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Tu Socio en Maquinaria de Construcción</h1>
+      <p>Equipos de alta calidad, servicio excepcional y soluciones integrales para todos tus proyectos de construcción en México.</p>
+      <div class="hero-buttons">
+        <a href="/catalogo" class="btn-primary">Ver Catálogo</a>
+        <a href="/cotizacion" class="btn-secondary">Solicitar Cotización</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="assets/IRONEX-removebg-preview.png" alt="Ironex - Maquinaria de Construcción">
+    </div>
+  </section>
+
+  <!-- Servicios Section -->
+  <section class="servicios">
+    <div class="section-header">
+      <h2>Nuestros Servicios</h2>
+      <p>Soluciones completas para la industria de la construcción</p>
+    </div>
+    <div class="servicios-grid">
+      <div class="servicio-card" *ngFor="let servicio of servicios">
+        <div class="servicio-icon">{{ servicio.icono }}</div>
+        <h3>{{ servicio.titulo }}</h3>
+        <p>{{ servicio.descripcion }}</p>
+        <a [href]="servicio.enlace" class="servicio-link">Más información →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Estadísticas Section -->
+  <section class="estadisticas">
+    <div class="estadisticas-grid">
+      <div class="estadistica-card" *ngFor="let stat of estadisticas">
+        <div class="estadistica-numero">{{ stat.numero }}</div>
+        <div class="estadistica-descripcion">{{ stat.descripcion }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>¿Listo para impulsar tu proyecto?</h2>
+      <p>Contacta con nuestros expertos y obtén la maquinaria que necesitas</p>
+      <div class="cta-buttons">
+        <a href="/contacto" class="btn-primary">Contactar Ahora</a>
+        <a href="https://wa.me/5210000000000" target="_blank" class="btn-whatsapp">
+          <span>📱</span> WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

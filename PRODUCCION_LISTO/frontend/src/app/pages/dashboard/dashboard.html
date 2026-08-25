@@ -1,0 +1,311 @@
+<div class="dashboard-container">
+  <!-- Header del Dashboard -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <div class="logo-section">
+        <h1>Panel de Administración</h1>
+        <p>Ironex</p>
+      </div>
+      <div class="user-section">
+        <span>Administrador</span>
+        <button class="logout-btn" (click)="logout()">Cerrar Sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navegación del Dashboard -->
+  <nav class="dashboard-nav">
+    <div class="nav-content">
+      <button 
+        class="nav-btn" 
+        [class.active]="activeView === 'administradores'"
+        (click)="setActiveView('administradores')"
+      >
+        <span class="nav-icon">👥</span>
+        Administradores
+      </button>
+      <button 
+        class="nav-btn" 
+        [class.active]="activeView === 'usuarios'"
+        (click)="setActiveView('usuarios')"
+      >
+        <span class="nav-icon">👤</span>
+        Usuarios
+      </button>
+      <button 
+        class="nav-btn" 
+        [class.active]="activeView === 'productos'"
+        (click)="setActiveView('productos')"
+      >
+        <span class="nav-icon">🏗️</span>
+        Productos
+      </button>
+    </div>
+  </nav>
+
+  <!-- Contenido Principal -->
+  <main class="dashboard-main">
+    <!-- Vista de Administradores -->
+    <div *ngIf="activeView === 'administradores'" class="view-container">
+      <div class="view-header">
+        <h2>Gestión de Administradores</h2>
+      </div>
+
+      <div class="content-grid">
+        <!-- Formulario de Administradores -->
+        <section class="form-section">
+          <h3>{{ adminForm.id ? 'Editar Administrador' : 'Nuevo Administrador' }}</h3>
+          <form (ngSubmit)="saveAdmin()" class="admin-form">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" [(ngModel)]="adminForm.nombre" name="adminNombre" required />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" [(ngModel)]="adminForm.email" name="adminEmail" required />
+            </div>
+            <div class="form-group">
+              <label>Rol</label>
+              <select [(ngModel)]="adminForm.rol" name="adminRol">
+                <option value="Admin">Admin</option>
+                <option value="Super Admin">Super Admin</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Estado</label>
+              <select [(ngModel)]="adminForm.estado" name="adminEstado">
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+              </select>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">
+                {{ adminForm.id ? 'Actualizar' : 'Guardar' }}
+              </button>
+              <button type="button" class="btn-secondary" (click)="resetAdminForm()">
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Tabla de Administradores -->
+        <section class="table-section">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Rol</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let admin of administradores">
+                  <td>{{ admin.id }}</td>
+                  <td>{{ admin.nombre }}</td>
+                  <td>{{ admin.email }}</td>
+                  <td>{{ admin.rol }}</td>
+                  <td>
+                    <span class="status-badge" [class.active]="admin.estado === 'Activo'">
+                      {{ admin.estado }}
+                    </span>
+                  </td>
+                  <td>
+                    <button class="btn-edit" (click)="editAdmin(admin)">✏️</button>
+                    <button class="btn-delete" (click)="deleteAdmin(admin.id)">🗑️</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Vista de Usuarios -->
+    <div *ngIf="activeView === 'usuarios'" class="view-container">
+      <div class="view-header">
+        <h2>Gestión de Usuarios</h2>
+      </div>
+
+      <div class="content-grid">
+        <!-- Formulario de Usuarios -->
+        <section class="form-section">
+          <div *ngIf="!userForm.id" style="padding: 2rem; text-align: center; color: #666; background: #f9f9f9; border-radius: 8px; border: 1px dashed #ccc;">
+            <p>👷🏻‍♂️ <b>Solo Edición Permitida</b></p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Los clientes nuevos se unen a la DB automáticamente al registrarse en el portal público de tu tienda.</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Haz clic en el lápiz (✏️) de algún cliente en la tabla para modificarlo.</p>
+          </div>
+
+          <form *ngIf="userForm.id" (ngSubmit)="saveUser()" class="user-form">
+            <h3 style="margin-bottom: 20px;">Editar Cliente #{{ userForm.id }}</h3>
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" [(ngModel)]="userForm.nombre" name="userNombre" required />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" [(ngModel)]="userForm.email" name="userEmail" required />
+            </div>
+            <div class="form-group">
+              <label>Contraseña (Opcional si edita)</label>
+              <input type="password" [(ngModel)]="userForm.password" name="userPassword" />
+            </div>
+            <div class="form-group">
+              <label>Estado</label>
+              <select [(ngModel)]="userForm.estado" name="userEstado">
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+              </select>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">
+                {{ userForm.id ? 'Actualizar' : 'Guardar' }}
+              </button>
+              <button type="button" class="btn-secondary" (click)="resetUserForm()">
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Tabla de Usuarios -->
+        <section class="table-section">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Registro</th>
+                  <th>Rol</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of clientUsuarios">
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.nombre }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.fecha_creacion | date:'shortDate' }}</td>
+                  <td>
+                    <span class="status-badge active">{{ user.rol }}</span>
+                  </td>
+                  <td>
+                    <button class="btn-edit" (click)="editUser(user)">✏️</button>
+                    <button class="btn-delete" (click)="deleteUser(user.id)">🗑️</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Vista de Productos -->
+    <div *ngIf="activeView === 'productos'" class="view-container">
+      <div class="view-header">
+        <h2>Gestión de Productos</h2>
+      </div>
+
+      <div class="content-grid">
+        <!-- Formulario de Productos -->
+        <section class="form-section">
+          <h3>{{ productForm.id ? 'Editar Producto' : 'Nuevo Producto' }}</h3>
+          <form (ngSubmit)="saveProduct()" class="product-form">
+            <div class="form-group">
+              <label>Nombre del Producto</label>
+              <input type="text" [(ngModel)]="productForm.nombre" name="productName" required />
+            </div>
+            <div class="form-group">
+              <label>Categoría Relacionada</label>
+              <select [(ngModel)]="productForm.categoria_nombre" name="productCategoria">
+                <option value="Maquinaria Pesada">Maquinaria Pesada</option>
+                <option value="Maquinaria Ligera">Maquinaria Ligera</option>
+                <option value="Herramientas">Herramientas</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Precio ($)</label>
+              <input type="number" [(ngModel)]="productForm.precio" name="productPrecio" min="0" />
+            </div>
+            <div class="form-group">
+              <label>Stock</label>
+              <input type="number" [(ngModel)]="productForm.stock" name="productStock" min="0" />
+            </div>
+            <div class="form-group">
+              <label>Condición Física</label>
+              <select [(ngModel)]="productForm.condicion" name="productCondicion">
+                <option value="nuevo">Nuevo de Fábrica</option>
+                <option value="usado">Semi-nuevo / Usado</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Imagen del Producto</label>
+              <input type="file" id="productImageInput" accept="image/*" (change)="onFileSelected($event)">
+              <small *ngIf="productForm.id" style="color: #666; font-size: 0.8em;">(Deja en blanco para conservar la imagen actual)</small>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">
+                {{ productForm.id ? 'Actualizar' : 'Guardar' }}
+              </button>
+              <button type="button" class="btn-secondary" (click)="resetProductForm()">
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Tabla de Productos -->
+        <section class="table-section">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Imagen</th>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Categoría</th>
+                  <th>Precio</th>
+                  <th>Stock</th>
+                  <th>Condición</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of productos">
+                  <td>
+                    <img *ngIf="product.imagen_url" [src]="product.imagen_url" alt="{{ product.nombre }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                    <span *ngIf="!product.imagen_url">🖼️</span>
+                  </td>
+                  <td>{{ product.id }}</td>
+                  <td>{{ product.nombre }}</td>
+                  <td>{{ product.categoria_nombre }}</td>
+                  <td>${{ (product.precio || 0).toLocaleString() }}</td>
+                  <td>{{ product.stock }}</td>
+                  <td>
+                    <span class="status-badge" 
+                          [class.active]="product.condicion === 'nuevo'"
+                          [class.warning]="product.condicion === 'usado'">
+                      {{ product.condicion | uppercase }}
+                    </span>
+                  </td>
+                  <td>
+                    <button class="btn-edit" (click)="editProduct(product)">✏️</button>
+                    <button class="btn-delete" (click)="deleteProduct(product.id)">🗑️</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>

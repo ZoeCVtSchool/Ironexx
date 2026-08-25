@@ -1,0 +1,122 @@
+<div class="catalogo-container">
+  <!-- Carrito Flotante -->
+  <div class="carrito-flotante" *ngIf="isLoggedIn && carrito.length > 0">
+    <button class="carrito-btn" (click)="abrirCarrito()">
+      🛒 Carrito ({{ getTotalItemsCarrito() }})
+    </button>
+  </div>
+
+  <!-- Modal del Carrito -->
+  <div class="carrito-modal" *ngIf="showCarrito" [class.active]="showCarrito">
+    <div class="carrito-content">
+      <div class="carrito-header">
+        <h3>Tu Carrito</h3>
+        <button class="cerrar-carrito" (click)="cerrarCarrito()">×</button>
+      </div>
+      
+      <div class="carrito-items">
+        <div class="carrito-item" *ngFor="let item of carrito; let i = index">
+          <div class="item-info">
+            <h4>{{ item.nombre }}</h4>
+            <p>Precio: ${{ item.precio.toLocaleString() }}</p>
+            <p>Cantidad: {{ item.cantidad || 0 }}</p>
+          </div>
+          <div class="item-total">
+            <p>${{ (item.precio * (item.cantidad || 0)).toLocaleString() }}</p>
+            <button class="eliminar-btn" (click)="eliminarDelCarrito(i)">Eliminar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carrito-total">
+        <h3>Total: ${{ getTotalCarrito().toLocaleString() }}</h3>
+      </div>
+
+      <div class="carrito-form">
+        <h4>Datos para el Envío</h4>
+        <form>
+          <input type="text" [(ngModel)]="formData.nombre" placeholder="Nombre completo" name="nombre" required>
+          <input type="email" [(ngModel)]="formData.email" placeholder="Email" name="email" required>
+          <input type="tel" [(ngModel)]="formData.telefono" placeholder="Teléfono" name="telefono" required>
+          <input type="text" [(ngModel)]="formData.direccion" placeholder="Dirección de envío" name="direccion" required>
+        </form>
+      </div>
+
+      <div class="carrito-actions">
+        <div id="paypal-button-container"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="catalogo-header">
+    <h1>Nuestro Catálogo</h1>
+    <p>Descubre la maquinaria de construcción más avanzada del mercado</p>
+    <div *ngIf="isLoggedIn" class="user-welcome-catalogo">
+      <p>Bienvenido, {{ userName }} 👋</p>
+    </div>
+  </div>
+
+  <div class="catalogo-intro">
+    <div class="intro-content">
+      <h2>Equipos de Primera Calidad</h2>
+      <p>
+        En MaquiConstrucción ofrecemos una amplia gama de maquinaria pesada nueva y usada,
+        con garantía y soporte técnico especializado. Nuestros equipos provienen de las mejores
+        marcas del mundo y están listos para afrontar cualquier desafío en tu proyecto de construcción.
+      </p>
+      <div class="intro-stats">
+        <div class="stat">
+          <span class="stat-number">500+</span>
+          <span class="stat-label">Equipos Disponibles</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">15+</span>
+          <span class="stat-label">Marcas Representadas</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">24/7</span>
+          <span class="stat-label">Soporte Técnico</span>
+        </div>
+      </div>
+    </div>
+    <div class="intro-image" [ngStyle]="{'background-image': 'url(assets/IRONEX-removebg-preview.png)'}">
+    </div>
+  </div>
+
+
+  <div class="productos-destacados">
+    <h2>Catálogo de Productos Disponibles</h2>
+    <div class="productos-grid">
+      <div class="producto-card" *ngFor="let producto of productosDestacados">
+        <div class="producto-image">
+          <img [src]="producto.imagen || '/assets/images/placeholder.svg'" [alt]="producto.nombre" (error)="onImageError($event)">
+          <div class="producto-badge">Destacado</div>
+        </div>
+        <div class="producto-content">
+          <h3>{{ producto.nombre }}</h3>
+          <p class="producto-categoria">{{ producto.categoria }}</p>
+          <p class="producto-descripcion">{{ producto.descripcion }}</p>
+          <div class="producto-footer">
+            <span class="producto-precio">${{ producto.precio.toLocaleString() }}</span>
+            <button *ngIf="isLoggedIn" class="comprar-btn" (click)="agregarAlCarrito(producto)">🛒 Comprar</button>
+            <button *ngIf="!isLoggedIn" class="login-btn" onclick="window.location.href='/login'">Inicia Sesión</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="catalogo-cta" *ngIf="!isLoggedIn">
+    <div class="cta-content">
+      <h2>¿Quieres comprar nuestros productos?</h2>
+      <p>Inicia sesión para acceder a nuestro sistema de compras y pedidos</p>
+      <div class="cta-buttons">
+        <a href="/login" class="cta-btn primary">Iniciar Sesión</a>
+        <a href="https://wa.me/5210000000000" target="_blank" class="cta-btn secondary">
+          <span>📱</span> WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

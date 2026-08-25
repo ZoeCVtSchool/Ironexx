@@ -1,0 +1,97 @@
+<div class="contacto-container">
+  <div class="contacto-header">
+    <h1>Contáctanos</h1>
+    <p>Estamos aquí para ayudarte con todas tus necesidades de maquinaria de construcción</p>
+  </div>
+
+  <div class="contacto-content">
+    <div class="contacto-info">
+      <div class="info-section">
+        <h2><span class="info-icon-wrap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-6.7-5.3-9.5-8.7A6.2 6.2 0 0 1 12 3.5a6.2 6.2 0 0 1 9.5 8.8C18.7 15.7 12 21 12 21zm0-5.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg></span>Ubicación</h2>
+        <p>Calle Principal 123<br>
+        Ciudad de México, CDMX<br>
+        México, CP 12345</p>
+      </div>
+
+      <div class="info-section">
+        <h2><span class="info-icon-wrap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.7 15.7 0 0 0 6.6 6.6l2.2-2.2a1.1 1.1 0 0 1 1.1-.25c1.2.4 2.5.6 3.8.6a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C11.6 21 3 12.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.6.6 3.8a1.1 1.1 0 0 1-.25 1.1L6.6 10.8z"/></svg></span>Teléfonos</h2>
+        <p>Oficina: (55) 1234-5678<br>
+        Ventas: (55) 8765-4321<br>
+        Soporte: (55) 1111-2222</p>
+      </div>
+
+      <div class="info-section">
+        <h2><span class="info-icon-wrap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11zm2.2.7l5.8 4.2 5.8-4.2H6.2zm11.3 1.8l-5.5 4-5.5-4v8.5c0 .3.2.5.5.5h10c.3 0 .5-.2.5-.5V9z"/></svg></span>Correo Electrónico</h2>
+        <p>info@maquiconstruccion.com<br>
+        ventas@maquiconstruccion.com<br>
+        soporte@maquiconstruccion.com</p>
+      </div>
+
+      <div class="info-section">
+        <h2><span class="info-icon-wrap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5a9.5 9.5 0 1 1 0 19 9.5 9.5 0 0 1 0-19zm1 4.5h-2v5.8l4.8 2.8 1-1.7-3.8-2.2V7z"/></svg></span>Horarios de Atención</h2>
+        <p>Lunes a Viernes: 8:00 AM - 6:00 PM<br>
+        Sábados: 9:00 AM - 2:00 PM<br>
+        Domingos: Cerrado</p>
+      </div>
+    </div>
+
+    <div class="contacto-form">
+      <h2>Envíanos un Mensaje</h2>
+      <form class="form" (ngSubmit)="enviarFormulario()" #contactForm="ngForm" novalidate>
+        <div class="form-group">
+          <label for="nombre">Nombre Completo *</label>
+          <input type="text" id="nombre" name="nombre" [(ngModel)]="formData.nombre" required>
+          <small *ngIf="formData.nombre && !formData.nombre.trim()" class="error-text">Escribe tu nombre.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Correo Electrónico *</label>
+          <input type="email" id="email" name="email" [(ngModel)]="formData.email" required email>
+          <small *ngIf="formData.email && emailInvalido" class="error-text">Ingresa un correo válido.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" [(ngModel)]="formData.telefono">
+        </div>
+
+        <div class="form-group">
+          <label for="mensaje">Mensaje *</label>
+          <textarea id="mensaje" name="mensaje" rows="5" [(ngModel)]="formData.mensaje" required
+            placeholder="Describe tu consulta, proyecto o requerimientos específicos..."></textarea>
+          <small *ngIf="formData.mensaje && !formData.mensaje.trim()" class="error-text">Escribe tu mensaje.</small>
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="isSubmitting || contactForm.invalid">
+          {{ isSubmitting ? 'Enviando...' : 'Enviar Mensaje' }}
+        </button>
+
+        <div
+          *ngIf="mensajeEstado"
+          class="status-message"
+          [ngClass]="{
+            'status-success': tipoEstado === 'success',
+            'status-error': tipoEstado === 'error',
+            'status-info': tipoEstado === 'info'
+          }"
+        >
+          {{ mensajeEstado }}
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="contacto-whatsapp">
+    <div class="whatsapp-section">
+      <h3>¿Prefieres WhatsApp?</h3>
+      <p>Contacta con nosotros directamente por WhatsApp para una respuesta más rápida.</p>
+      <a href="https://wa.me/5210000000000?text=Hola,%20me%20gustaría%20obtener%20información%20sobre%20sus%20productos"
+         target="_blank" class="whatsapp-btn">
+        <span class="whatsapp-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.95A9.42 9.42 0 0 0 12.05 2a9.62 9.62 0 0 0-8.2 14.6L2 22l5.5-1.45A9.61 9.61 0 0 0 12.05 22a9.43 9.43 0 0 0 6.99-3.05 9.95 9.95 0 0 0 0-14.01Zm-6.99 14.7c-1.26 0-2.5-.34-3.58-.98l-.26-.15-3.26.86.87-3.17-.17-.26A7.73 7.73 0 0 1 4.32 12a7.72 7.72 0 1 1 13.45 5.46 7.65 7.65 0 0 1-6.66 2.19Zm4.2-5.77c-.23-.12-1.37-.68-1.58-.75-.21-.08-.37-.12-.52.12-.15.23-.58.75-.71.9-.13.15-.26.17-.48.06-.23-.12-.96-.35-1.82-1.12-.67-.6-1.12-1.33-1.25-1.56-.13-.23-.02-.35.1-.46.1-.1.23-.26.34-.39.11-.13.15-.23.23-.38.08-.15.04-.29-.02-.4-.06-.12-.52-1.26-.71-1.72-.19-.46-.38-.39-.52-.4h-.45c-.15 0-.4.06-.61.29-.2.23-.77.75-.77 1.82 0 1.08.79 2.1.9 2.25.11.15 1.54 2.34 3.74 3.28.52.23.93.36 1.25.46.53.17 1.02.15 1.4.09.43-.06 1.37-.56 1.56-1.1.19-.54.19-.99.13-1.09-.06-.1-.21-.16-.45-.28Z"/></svg>
+        </span>
+        Contactar por WhatsApp
+      </a>
+    </div>
+  </div>
+</div>

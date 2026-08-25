@@ -1,0 +1,140 @@
+<div class="cotizacion-container">
+  <div class="cotizacion-header">
+    <h1>Solicitar Cotización</h1>
+    <p>Obtén una cotización personalizada para tu proyecto de construcción</p>
+  </div>
+
+  <div class="cotizacion-intro">
+    <div class="intro-content">
+      <h2>¿Qué necesitas cotizar?</h2>
+      <p>
+        Nuestro equipo de expertos está listo para proporcionarte la mejor cotización
+        adaptada a tus necesidades específicas. Ya sea que necesites alquilar o comprar
+        maquinaria, tenemos las soluciones perfectas para tu proyecto.
+      </p>
+      <div class="intro-benefits">
+        <div class="benefit">
+          <span class="benefit-icon">⚡</span>
+          <span>Cotización en 24 horas</span>
+        </div>
+        <div class="benefit">
+          <span class="benefit-icon">💰</span>
+          <span>Precios competitivos</span>
+        </div>
+        <div class="benefit">
+          <span class="benefit-icon">🔧</span>
+          <span>Soporte técnico incluido</span>
+        </div>
+        <div class="benefit">
+          <span class="benefit-icon">📋</span>
+          <span>Asesoría especializada</span>
+        </div>
+      </div>
+    </div>
+    <div class="intro-image">
+      <img src="assets/IRONEX-removebg-preview.png" alt="Ironex - Cotización de maquinaria">
+    </div>
+  </div>
+
+  <div class="formas-contacto">
+    <h2>Elige tu forma de contacto preferida</h2>
+    <div class="contacto-grid">
+      <div class="contacto-card" *ngFor="let forma of formasContacto">
+        <div class="contacto-icon">{{ forma.icono }}</div>
+        <h3>{{ forma.titulo }}</h3>
+        <p>{{ forma.descripcion }}</p>
+        <a
+          [href]="forma.accion"
+          [target]="forma.tipo === 'whatsapp' ? '_blank' : '_self'"
+          class="contacto-btn"
+          [class]="forma.tipo">
+          {{ forma.tipo === 'tel' ? 'Llamar ahora' :
+             forma.tipo === 'whatsapp' ? 'Contactar por WhatsApp' :
+             forma.tipo === 'email' ? 'Enviar correo' : 'Ir al formulario' }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="informacion-adicional">
+    <div class="info-section">
+      <h2>Información que necesitamos</h2>
+      <p>Para proporcionarte la cotización más precisa, por favor incluye:</p>
+      <div class="info-list">
+        <div class="info-item">
+          <span class="info-icon">🏗️</span>
+          <div>
+            <strong>Tipo de proyecto:</strong> Construcción, minería, agricultura, etc.
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">📅</span>
+          <div>
+            <strong>Duración del alquiler:</strong> Días, semanas o meses
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">📍</span>
+          <div>
+            <strong>Ubicación:</strong> Ciudad y estado donde se utilizará la maquinaria
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">⚙️</span>
+          <div>
+            <strong>Especificaciones técnicas:</strong> Potencia, capacidad, características especiales
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h2>Proceso de Cotización</h2>
+      <div class="proceso-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Contacto Inicial</h4>
+            <p>Nos proporcionas los detalles de tu proyecto</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Análisis Técnico</h4>
+            <p>Evaluamos tus necesidades y recomendamos equipos</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>Cotización Detallada</h4>
+            <p>Recibes propuesta completa con precios y condiciones</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h4>Seguimiento</h4>
+            <p>Acompañamiento durante todo el proceso</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cotizacion-urgente">
+    <div class="urgente-content">
+      <h2>¿Necesitas cotización urgente?</h2>
+      <p>Llámanos directamente o escríbenos por WhatsApp para atención inmediata</p>
+      <div class="urgente-contacto">
+        <a href="tel:(55)1234-5678" class="urgente-btn phone">
+          <span>📞</span> (55) 1234-5678
+        </a>
+        <a href="https://wa.me/5210000000000" target="_blank" class="urgente-btn whatsapp">
+          <span>📱</span> WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
