@@ -46,6 +46,14 @@ class BleService {
         return;
       }
 
+      // E2 punto 15: comprobar que el adaptador Bluetooth este encendido
+      // antes de escanear (no solo que el permiso este concedido).
+      final adapterState = await FlutterBluePlus.adapterState.first;
+      if (adapterState != BluetoothAdapterState.on) {
+        notificationProvider.setError('Bluetooth está apagado. Actívalo e intenta de nuevo.');
+        return;
+      }
+
       final granted = await _requestPermissions();
       if (!granted) {
         notificationProvider.setError('Permisos de Bluetooth/ubicación denegados.');
