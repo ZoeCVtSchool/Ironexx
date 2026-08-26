@@ -106,7 +106,7 @@ class HomeScreen extends StatelessWidget {
               _actionButton(
                 context: context,
                 title: 'Monitor BLE del wearable',
-                subtitle: 'Pasos, ritmo cardíaco y calorías en tiempo real',
+                subtitle: 'Temperatura, combustible y horómetro en tiempo real',
                 icon: Icons.bluetooth_rounded,
                 onTap: () => Navigator.push(
                   context,

@@ -58,8 +58,13 @@ class MetricsSimulator {
     // rango critico si "trabaja" varios ciclos seguidos (simula sobrecarga).
     _temperatura = (_temperatura + _random.nextInt(5) - 2).clamp(60, 120);
 
-    // Combustible: se consume progresivamente durante la operacion.
-    _combustible = (_combustible - _random.nextInt(2)).clamp(0, 100);
+    // Combustible: se consume progresivamente durante la operacion (1 de
+    // cada 8 ticks en promedio, ~7-8 min para llegar al umbral critico de
+    // 15%) en vez de bajar casi cada segundo -- da tiempo suficiente para
+    // demostrar el ecosistema completo antes de que se agote.
+    if (_random.nextInt(8) == 0) {
+      _combustible = (_combustible - 1).clamp(0, 100);
+    }
 
     // Horometro: minutos de operacion acumulados en esta sesion (escala
     // acelerada para que el umbral de mantenimiento sea demostrable en una

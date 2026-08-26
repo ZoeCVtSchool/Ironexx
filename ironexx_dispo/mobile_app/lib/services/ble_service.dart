@@ -89,9 +89,14 @@ class BleService {
         }
       });
 
+      // Sin filtro withServices: en el proyecto de referencia
+      // (HousesWeb_Wearables/ble_client.dart, BLE confirmado funcionando
+      // end-to-end) el scan corre sin filtro a nivel de ScanFilter/HAL y el
+      // match por SERVICE_UUID se hace manualmente en el listener de arriba.
+      // El filtro server-side (withServices) puede comportarse de forma
+      // inconsistente en el controlador BLE virtual (Netsim) del emulador.
       await FlutterBluePlus.startScan(
         timeout: const Duration(seconds: 12),
-        withServices: [Guid(BleConstants.SERVICE_UUID)],
       );
     } catch (e) {
       _isConnecting = false;
@@ -109,7 +114,11 @@ class BleService {
       notificationProvider.setScanning();
       _connectedDevice = device;
 
-      await device.connect(timeout: const Duration(seconds: 15));
+      // 30s (no 15s): el emparejamiento (bonding) a nivel de SO que dispara
+      // el primer setNotifyValue puede tardar ~20s en completarse, y con un
+      // timeout mas corto la app cancelaba la conexion justo antes de que
+      // el bonding terminara.
+      await device.connect(timeout: const Duration(seconds: 30));
 
       _connectionSubscription = device.connectionState.listen((state) {
         if (state == BluetoothConnectionState.disconnected) {

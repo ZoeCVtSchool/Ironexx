@@ -15,8 +15,6 @@ import '../ble_constants.dart';
 /// notifica usando la misma instancia de caracteristica ya registrada
 /// (BlePeripheral.updateCharacteristic referencia por characteristicId).
 class BleServerService {
-  static const String _cccdUuid = '00002902-0000-1000-8000-00805F9B34FB';
-
   bool _isReady = false;
   bool _isAdvertising = false;
 
@@ -44,6 +42,13 @@ class BleServerService {
 
     if (!_isReady) {
       await BlePeripheral.initialize();
+      // Confirma con el callback nativo si el advertising realmente arranco
+      // (en vez de asumirlo apenas resuelve el Future), igual que el
+      // proyecto de referencia -- startAdvertising() puede resolver sin
+      // error aunque el advertising real haya fallado en el lado nativo.
+      BlePeripheral.setAdvertisingStatusUpdateCallback((advertising, error) {
+        _isAdvertising = advertising;
+      });
       await BlePeripheral.addService(
         BleService(
           uuid: BleConstants.SERVICE_UUID,
@@ -62,7 +67,6 @@ class BleServerService {
     // de 31 bytes del advertising BLE legacy y el advertising falla en
     // silencio. El cliente ya filtra por SERVICE_UUID, no por nombre.
     await BlePeripheral.startAdvertising(services: [BleConstants.SERVICE_UUID]);
-    _isAdvertising = true;
   }
 
   Future<void> stopServer() async {
@@ -90,6 +94,11 @@ class BleServerService {
     );
   }
 
+  // Sin descriptor CCCD explicito: el paquete ble_peripheral lo gestiona
+  // automaticamente para caracteristicas NOTIFY (igual que en el proyecto
+  // de referencia, ble_server.dart). Agregarlo a mano puede duplicar/
+  // corromper la estructura del servicio GATT sin que el error se note en
+  // el status=0 del log de addService().
   BleCharacteristic _notifyCharacteristic(String uuid) {
     return BleCharacteristic(
       uuid: uuid,
@@ -98,15 +107,6 @@ class BleServerService {
         CharacteristicProperties.notify.index,
       ],
       permissions: [AttributePermissions.readable.index],
-      descriptors: [
-        BleDescriptor(
-          uuid: _cccdUuid,
-          permissions: [
-            AttributePermissions.readable.index,
-            AttributePermissions.writeable.index,
-          ],
-        ),
-      ],
       value: null,
     );
   }
